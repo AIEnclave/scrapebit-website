@@ -17,7 +17,7 @@ export default function TermsOfServicePage() {
 
         <div className="prose prose-gray max-w-none">
           <p className="text-gray-600 leading-relaxed">
-            The website located at <Link href="/" className="text-purple-600 hover:text-purple-700">scrapebit.com</Link> (the &quot;Site&quot;) is a copyrighted work belonging to Dataotto (&quot;Company&quot;, &quot;us&quot;, &quot;our&quot;, and &quot;we&quot;). Certain features of the Site may be subject to additional guidelines, terms, or rules, which will be posted on the Site in connection with such features. All such additional terms, guidelines, and rules are incorporated by reference into these Terms.
+            The website located at <Link href="/" className="text-purple-600 hover:text-purple-700">scrapebit.com</Link> (the &quot;Site&quot;) is a copyrighted work belonging to Scrapebit (&quot;Company&quot;, &quot;us&quot;, &quot;our&quot;, and &quot;we&quot;). Certain features of the Site may be subject to additional guidelines, terms, or rules, which will be posted on the Site in connection with such features. All such additional terms, guidelines, and rules are incorporated by reference into these Terms.
           </p>
 
           <p className="text-gray-600 leading-relaxed mt-4">

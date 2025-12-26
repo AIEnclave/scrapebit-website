@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
 
         <div className="prose prose-gray max-w-none">
           <p className="text-gray-600 leading-relaxed">
-            Dataotto (the &quot;Company&quot;) is dedicated to protecting the privacy of its users. This Privacy Policy (&quot;Privacy Policy&quot;) is designed to explain how we collect, use, and safeguard the information you provide to us, and to help you make informed decisions when using our Service.
+            Scrapebit (the &quot;Company&quot;) is dedicated to protecting the privacy of its users. This Privacy Policy (&quot;Privacy Policy&quot;) is designed to explain how we collect, use, and safeguard the information you provide to us, and to help you make informed decisions when using our Service.
           </p>
 
           <p className="text-gray-600 leading-relaxed mt-4">
@@ -169,7 +169,7 @@ export default function PrivacyPolicyPage() {
 
           <div className="bg-gray-50 rounded-lg p-6 mt-4">
             <p className="text-gray-600">
-              <strong>Dataotto</strong><br />
+              <strong>Scrapebit</strong><br />
               Email: <a href="mailto:ashwinsingh632@gmail.com" className="text-purple-600 hover:text-purple-700">ashwinsingh632@gmail.com</a>
             </p>
           </div>

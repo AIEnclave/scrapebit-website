@@ -17,109 +17,65 @@ export default function RefundPolicyPage() {
 
         <div className="prose prose-gray max-w-none">
           <p className="text-gray-600 leading-relaxed">
-            At Dataotto (&quot;Company,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), we strive to ensure customer satisfaction with our services. This Refund Policy outlines the terms and conditions under which refunds may be granted for our subscription services.
+            At Scrapebit (&quot;Company,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), we want you to be completely satisfied with your purchase. This Refund Policy outlines the terms under which refunds are provided for our subscription services.
           </p>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. Free Tier</h2>
+          <div className="bg-green-50 border-l-4 border-green-400 p-4 my-8">
+            <p className="text-green-800">
+              <strong>14-Day Money-Back Guarantee:</strong> If you are not satisfied with your purchase for any reason, you may request a full refund within 14 days of your purchase date. No questions asked.
+            </p>
+          </div>
+
+          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. Refund Eligibility</h2>
+          <p className="text-gray-600 leading-relaxed">
+            All paid subscriptions (monthly and annual) are eligible for a full refund within 14 days of the original purchase date.
+          </p>
+          <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
+            <li>You may request a refund within 14 days of your initial purchase.</li>
+            <li>Refunds apply to both monthly and annual subscription plans.</li>
+            <li>The 14-day period begins on the date of your purchase.</li>
+          </ul>
+
+          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">2. How to Request a Refund</h2>
+          <p className="text-gray-600 leading-relaxed">
+            To request a refund, please contact us:
+          </p>
+          <ol className="list-decimal pl-6 mt-4 space-y-2 text-gray-600">
+            <li>Send an email to <a href="mailto:ashwinsingh632@gmail.com" className="text-purple-600 hover:text-purple-700">ashwinsingh632@gmail.com</a> with the subject line &quot;Refund Request.&quot;</li>
+            <li>Include your account email address and order details.</li>
+          </ol>
+
+          <p className="text-gray-600 leading-relaxed mt-4">
+            We will process your refund request promptly. Refunds will be issued to the original payment method within 5-10 business days.
+          </p>
+
+          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">3. Subscription Cancellation</h2>
+          <p className="text-gray-600 leading-relaxed">
+            You may cancel your subscription at any time:
+          </p>
+          <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
+            <li>If you cancel within the 14-day refund window, you will receive a full refund.</li>
+            <li>If you cancel after the 14-day window, you will retain access to the service until the end of your current billing period, but no refund will be issued.</li>
+          </ul>
+
+          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">4. Free Tier</h2>
           <p className="text-gray-600 leading-relaxed">
             Our Free tier is provided at no cost. As no payment is required, no refunds are applicable to the Free tier.
           </p>
 
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">2. Paid Subscriptions</h2>
-          
-          <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">2.1 Monthly Subscriptions</h3>
+          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">5. Changes to This Policy</h2>
           <p className="text-gray-600 leading-relaxed">
-            Monthly subscriptions are billed on a recurring monthly basis. Due to the nature of our service:
-          </p>
-          <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
-            <li>Monthly subscription fees are <strong>non-refundable</strong> once the billing cycle has begun.</li>
-            <li>You may cancel your subscription at any time, and you will retain access to the service until the end of your current billing period.</li>
-            <li>No partial refunds will be issued for unused portions of a monthly subscription.</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">2.2 Annual Subscriptions</h3>
-          <p className="text-gray-600 leading-relaxed">
-            Annual subscriptions are billed upfront for a full year. We offer the following refund terms:
+            We reserve the right to modify this Refund Policy at any time. Changes will be effective upon posting to our website.
           </p>
 
-          <div className="bg-green-50 border-l-4 border-green-400 p-4 my-6">
-            <p className="text-green-800">
-              <strong>7-Day Refund Window:</strong> If you are not satisfied with your annual subscription, you may request a full refund within 7 days of your initial purchase date.
-            </p>
-          </div>
-
-          <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
-            <li>After the 7-day window, annual subscription fees are <strong>non-refundable</strong>.</li>
-            <li>If you cancel after 7 days, you will retain access to the service until the end of your annual billing period.</li>
-            <li>No partial refunds will be issued for unused portions of an annual subscription after the 7-day refund window.</li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">3. Refund Eligibility</h2>
-          <p className="text-gray-600 leading-relaxed">
-            To be eligible for a refund, you must meet the following criteria:
-          </p>
-          <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
-            <li>The refund request must be submitted within the applicable refund window (7 days for annual subscriptions).</li>
-            <li>Your account must be in good standing (not suspended or terminated for violation of our Terms of Service).</li>
-            <li>You have not previously received a refund for the same subscription.</li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">4. How to Request a Refund</h2>
-          <p className="text-gray-600 leading-relaxed">
-            To request a refund, please follow these steps:
-          </p>
-          <ol className="list-decimal pl-6 mt-4 space-y-2 text-gray-600">
-            <li>Send an email to <a href="mailto:ashwinsingh632@gmail.com" className="text-purple-600 hover:text-purple-700">ashwinsingh632@gmail.com</a> with the subject line &quot;Refund Request.&quot;</li>
-            <li>Include your account email address and the reason for your refund request.</li>
-            <li>Provide any relevant order or transaction details.</li>
-          </ol>
-
-          <p className="text-gray-600 leading-relaxed mt-4">
-            We will review your request and respond within 5 business days. If approved, refunds will be processed to the original payment method within 5-10 business days.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">5. Exceptions</h2>
-          <p className="text-gray-600 leading-relaxed">
-            Refunds will not be granted in the following circumstances:
-          </p>
-          <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
-            <li>Requests made after the applicable refund window has expired.</li>
-            <li>Accounts terminated due to violation of our Terms of Service or Acceptable Use Policy.</li>
-            <li>Credits or promotional offers that were applied to your subscription.</li>
-            <li>Chargebacks initiated with your payment provider before contacting us.</li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">6. Credit Consumption</h2>
-          <p className="text-gray-600 leading-relaxed">
-            Please note that credits consumed during your subscription period are non-refundable. If you request a refund:
-          </p>
-          <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
-            <li>Credits already used will be deducted from the refund amount at their prorated value.</li>
-            <li>If significant credits have been consumed, the refund amount may be reduced accordingly.</li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">7. Cancellation vs. Refund</h2>
-          <p className="text-gray-600 leading-relaxed">
-            Canceling your subscription and requesting a refund are separate processes:
-          </p>
-          <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
-            <li><strong>Cancellation:</strong> Stops future billing but allows you to use the service until the end of your current period.</li>
-            <li><strong>Refund:</strong> Returns payment to you but immediately terminates your access to paid features.</li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">8. Changes to This Policy</h2>
-          <p className="text-gray-600 leading-relaxed">
-            We reserve the right to modify this Refund Policy at any time. Changes will be effective upon posting to our website. Continued use of our services after changes constitutes acceptance of the modified policy.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">9. Contact Information</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">6. Contact Information</h2>
           <p className="text-gray-600 leading-relaxed">
             If you have any questions about this Refund Policy, please contact us:
           </p>
 
           <div className="bg-gray-50 rounded-lg p-6 mt-4">
             <p className="text-gray-600">
-              <strong>Dataotto</strong><br />
+              <strong>Scrapebit</strong><br />
               Email: <a href="mailto:ashwinsingh632@gmail.com" className="text-purple-600 hover:text-purple-700">ashwinsingh632@gmail.com</a>
             </p>
           </div>
@@ -127,10 +83,9 @@ export default function RefundPolicyPage() {
           <div className="bg-blue-50 border-l-4 border-blue-400 p-4 my-8">
             <h3 className="text-lg font-semibold text-blue-800 mb-2">Summary</h3>
             <ul className="list-disc pl-6 space-y-1 text-blue-700 text-sm">
-              <li><strong>Monthly subscriptions:</strong> Non-refundable, cancel anytime</li>
-              <li><strong>Annual subscriptions:</strong> Full refund within 7 days of purchase</li>
-              <li><strong>Credits used:</strong> May reduce refund amount</li>
-              <li><strong>Refund processing:</strong> 5-10 business days after approval</li>
+              <li><strong>All paid plans:</strong> Full refund within 14 days of purchase</li>
+              <li><strong>No questions asked:</strong> Request a refund for any reason</li>
+              <li><strong>Refund processing:</strong> 5-10 business days</li>
             </ul>
           </div>
         </div>

@@ -91,7 +91,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-8 pt-8">
           <p className="text-sm text-gray-400 text-center">
-            © {new Date().getFullYear()} Dataotto. All rights reserved.
+            © {new Date().getFullYear()} Scrapebit. All rights reserved.
           </p>
         </div>
       </div>
