@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service - AI Scraper',
-  description: 'Terms of Service and conditions for using AI Scraper web scraping platform.',
+  title: 'Terms of Service - Scrapebit',
+  description: 'Terms of Service and conditions for using Scrapebit web scraping platform.',
 }
 
 export default function TermsOfServicePage() {
@@ -17,7 +17,7 @@ export default function TermsOfServicePage() {
 
         <div className="prose prose-gray max-w-none">
           <p className="text-gray-600 leading-relaxed">
-            The website located at <Link href="/" className="text-purple-600 hover:text-purple-700">aiscraper.com</Link> (the &quot;Site&quot;) is a copyrighted work belonging to AI Scraper Inc. (&quot;Company&quot;, &quot;us&quot;, &quot;our&quot;, and &quot;we&quot;). Certain features of the Site may be subject to additional guidelines, terms, or rules, which will be posted on the Site in connection with such features. All such additional terms, guidelines, and rules are incorporated by reference into these Terms.
+            The website located at <Link href="/" className="text-purple-600 hover:text-purple-700">scrapebit.com</Link> (the &quot;Site&quot;) is a copyrighted work belonging to Dataotto (&quot;Company&quot;, &quot;us&quot;, &quot;our&quot;, and &quot;we&quot;). Certain features of the Site may be subject to additional guidelines, terms, or rules, which will be posted on the Site in connection with such features. All such additional terms, guidelines, and rules are incorporated by reference into these Terms.
           </p>
 
           <p className="text-gray-600 leading-relaxed mt-4">
@@ -131,10 +131,8 @@ export default function TermsOfServicePage() {
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">11. Contact Information</h2>
           <div className="bg-gray-50 rounded-lg p-6 mt-4">
             <p className="text-gray-600">
-              <strong>AI Scraper Inc.</strong><br />
-              Address: 548 Market St. Suite 41440<br />
-              San Francisco, California 94104<br />
-              Email: <a href="mailto:contact@example.com" className="text-purple-600 hover:text-purple-700">contact@example.com</a>
+              <strong>Dataotto</strong><br />
+              Email: <a href="mailto:ashwinsingh632@gmail.com" className="text-purple-600 hover:text-purple-700">ashwinsingh632@gmail.com</a>
             </p>
           </div>
         </div>

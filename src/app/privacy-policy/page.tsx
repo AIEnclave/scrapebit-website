@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - AI Scraper',
-  description: 'Privacy Policy for AI Scraper. Learn how we collect, use, and protect your personal information.',
+  title: 'Privacy Policy - Scrapebit',
+  description: 'Privacy Policy for Scrapebit. Learn how we collect, use, and protect your personal information.',
 }
 
 export default function PrivacyPolicyPage() {
@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
 
         <div className="prose prose-gray max-w-none">
           <p className="text-gray-600 leading-relaxed">
-            AI Scraper Inc. (the &quot;Company&quot;) is dedicated to protecting the privacy of its users. This Privacy Policy (&quot;Privacy Policy&quot;) is designed to explain how we collect, use, and safeguard the information you provide to us, and to help you make informed decisions when using our Service.
+            Dataotto (the &quot;Company&quot;) is dedicated to protecting the privacy of its users. This Privacy Policy (&quot;Privacy Policy&quot;) is designed to explain how we collect, use, and safeguard the information you provide to us, and to help you make informed decisions when using our Service.
           </p>
 
           <p className="text-gray-600 leading-relaxed mt-4">
@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
           </p>
 
           <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-600">
-            <li>&quot;Site&quot; refers to the Company&apos;s website, accessible at <Link href="/" className="text-purple-600 hover:text-purple-700">aiscraper.com</Link>.</li>
+            <li>&quot;Site&quot; refers to the Company&apos;s website, accessible at <Link href="/" className="text-purple-600 hover:text-purple-700">scrapebit.com</Link>.</li>
             <li>&quot;Service&quot; refers to the Company&apos;s services accessed via the Site, which allow users to build automations and execute workflows.</li>
             <li>The terms &quot;we,&quot; &quot;us,&quot; and &quot;our&quot; refer to the Company.</li>
             <li>&quot;You&quot; refers to you, as a user of our Site or Service.</li>
@@ -76,7 +76,7 @@ export default function PrivacyPolicyPage() {
 
           <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-3">3. Children&apos;s Privacy</h3>
           <p className="text-gray-600 leading-relaxed">
-            Our Site and Service are not intended for individuals under the age of 13. We do not knowingly collect or solicit information from anyone under 13. If we discover that we have collected personal information from a child under 13 without parental consent, we will delete it promptly. If you believe we have collected such information, please contact us at <a href="mailto:contact@example.com" className="text-purple-600 hover:text-purple-700">contact@example.com</a>.
+            Our Site and Service are not intended for individuals under the age of 13. We do not knowingly collect or solicit information from anyone under 13. If we discover that we have collected personal information from a child under 13 without parental consent, we will delete it promptly. If you believe we have collected such information, please contact us at <a href="mailto:ashwinsingh632@gmail.com" className="text-purple-600 hover:text-purple-700">ashwinsingh632@gmail.com</a>.
           </p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">II. How We Use and Share Information</h2>
@@ -140,7 +140,7 @@ export default function PrivacyPolicyPage() {
           </p>
 
           <p className="text-gray-600 leading-relaxed mt-4">
-            You may request the deletion of your Personal Information by contacting us at <a href="mailto:contact@example.com" className="text-purple-600 hover:text-purple-700">contact@example.com</a>. We will delete your data unless we are legally required or permitted to retain it.
+            You may request the deletion of your Personal Information by contacting us at <a href="mailto:ashwinsingh632@gmail.com" className="text-purple-600 hover:text-purple-700">ashwinsingh632@gmail.com</a>. We will delete your data unless we are legally required or permitted to retain it.
           </p>
 
           <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-3">Data and Generative AI</h3>
@@ -169,15 +169,13 @@ export default function PrivacyPolicyPage() {
 
           <div className="bg-gray-50 rounded-lg p-6 mt-4">
             <p className="text-gray-600">
-              <strong>AI Scraper Inc.</strong><br />
-              Address: 548 Market St. Suite 41440<br />
-              San Francisco, California 94104<br />
-              Email: <a href="mailto:contact@example.com" className="text-purple-600 hover:text-purple-700">contact@example.com</a>
+              <strong>Dataotto</strong><br />
+              Email: <a href="mailto:ashwinsingh632@gmail.com" className="text-purple-600 hover:text-purple-700">ashwinsingh632@gmail.com</a>
             </p>
           </div>
 
           <p className="text-gray-600 leading-relaxed mt-8">
-            Thank you for trusting AI Scraper with your information.
+            Thank you for trusting Scrapebit with your information.
           </p>
         </div>
 

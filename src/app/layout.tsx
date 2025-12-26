@@ -10,9 +10,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AI Scraper - Extract Data from Any Website in 2 Clicks",
+  title: "Scrapebit - Extract Data from Any Website in 2 Clicks",
   description: "The next generation AI-powered web scraper. Extract structured data from any website using natural language. No coding required.",
-  keywords: "web scraper, ai scraper, data extraction, web scraping, automation",
+  keywords: "web scraper, ai scraper, data extraction, web scraping, automation, scrapebit",
 };
 
 export default function RootLayout({

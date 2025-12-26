@@ -18,7 +18,7 @@ export default function Header() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <span className="text-xl font-bold text-gray-900">AI Scraper</span>
+              <span className="text-xl font-bold text-gray-900">Scrapebit</span>
             </Link>
           </div>
 
@@ -40,12 +40,6 @@ export default function Header() {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <Link
-              href="#"
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Sign In
-            </Link>
             <Link
               href="#"
               className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-blue-500 rounded-lg hover:from-purple-700 hover:to-blue-600 transition-all shadow-md hover:shadow-lg"
@@ -95,9 +89,6 @@ export default function Header() {
                 Refund Policy
               </Link>
               <div className="pt-2 flex flex-col gap-2">
-                <Link href="#" className="text-base font-medium text-gray-600 hover:text-gray-900 px-2 py-1">
-                  Sign In
-                </Link>
                 <Link
                   href="#"
                   className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-blue-500 rounded-lg"

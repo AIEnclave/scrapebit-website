@@ -13,7 +13,7 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <span className="text-xl font-bold text-white">AI Scraper</span>
+              <span className="text-xl font-bold text-white">Scrapebit</span>
             </Link>
             <p className="text-sm text-gray-400 max-w-sm">
               The next generation AI-powered web scraper. Extract data from any website in just 2 clicks using natural language.
@@ -81,7 +81,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="mailto:contact@example.com" className="text-sm text-gray-400 hover:text-white transition-colors">
+                <a href="mailto:ashwinsingh632@gmail.com" className="text-sm text-gray-400 hover:text-white transition-colors">
                   Contact Us
                 </a>
               </li>
@@ -91,7 +91,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-8 pt-8">
           <p className="text-sm text-gray-400 text-center">
-            © {new Date().getFullYear()} AI Scraper. All rights reserved.
+            © {new Date().getFullYear()} Dataotto. All rights reserved.
           </p>
         </div>
       </div>

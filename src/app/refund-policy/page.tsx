@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Refund Policy - AI Scraper',
-  description: 'Refund Policy for AI Scraper subscriptions and payments.',
+  title: 'Refund Policy - Scrapebit',
+  description: 'Refund Policy for Scrapebit subscriptions and payments.',
 }
 
 export default function RefundPolicyPage() {
@@ -17,7 +17,7 @@ export default function RefundPolicyPage() {
 
         <div className="prose prose-gray max-w-none">
           <p className="text-gray-600 leading-relaxed">
-            At AI Scraper Inc. (&quot;Company,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), we strive to ensure customer satisfaction with our services. This Refund Policy outlines the terms and conditions under which refunds may be granted for our subscription services.
+            At Dataotto (&quot;Company,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), we strive to ensure customer satisfaction with our services. This Refund Policy outlines the terms and conditions under which refunds may be granted for our subscription services.
           </p>
 
           <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4">1. Free Tier</h2>
@@ -69,7 +69,7 @@ export default function RefundPolicyPage() {
             To request a refund, please follow these steps:
           </p>
           <ol className="list-decimal pl-6 mt-4 space-y-2 text-gray-600">
-            <li>Send an email to <a href="mailto:billing@example.com" className="text-purple-600 hover:text-purple-700">billing@example.com</a> with the subject line &quot;Refund Request.&quot;</li>
+            <li>Send an email to <a href="mailto:ashwinsingh632@gmail.com" className="text-purple-600 hover:text-purple-700">ashwinsingh632@gmail.com</a> with the subject line &quot;Refund Request.&quot;</li>
             <li>Include your account email address and the reason for your refund request.</li>
             <li>Provide any relevant order or transaction details.</li>
           </ol>
@@ -119,11 +119,8 @@ export default function RefundPolicyPage() {
 
           <div className="bg-gray-50 rounded-lg p-6 mt-4">
             <p className="text-gray-600">
-              <strong>AI Scraper Inc.</strong><br />
-              Address: 548 Market St. Suite 41440<br />
-              San Francisco, California 94104<br />
-              Billing Email: <a href="mailto:billing@example.com" className="text-purple-600 hover:text-purple-700">billing@example.com</a><br />
-              General Email: <a href="mailto:contact@example.com" className="text-purple-600 hover:text-purple-700">contact@example.com</a>
+              <strong>Dataotto</strong><br />
+              Email: <a href="mailto:ashwinsingh632@gmail.com" className="text-purple-600 hover:text-purple-700">ashwinsingh632@gmail.com</a>
             </p>
           </div>
 

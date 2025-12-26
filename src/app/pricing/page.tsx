@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Pricing - AI Scraper',
+  title: 'Pricing - Scrapebit',
   description: 'Choose the perfect plan for your web scraping needs. Free tier available with powerful features.',
 }
 
@@ -202,7 +202,7 @@ export default function PricingPage() {
                 </ul>
 
                 <Link
-                  href={plan.name === 'Business' ? 'mailto:pricing@example.com' : '#'}
+                  href={plan.name === 'Business' ? 'mailto:ashwinsingh632@gmail.com' : '#'}
                   className={`mt-6 block w-full rounded-lg px-4 py-2.5 text-center text-sm font-semibold transition-all ${
                     plan.popular
                       ? 'bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-700 hover:to-blue-600 shadow-md'
@@ -341,7 +341,7 @@ export default function PricingPage() {
           <div className="mt-12 text-center">
             <p className="text-gray-600 mb-4">Still have questions?</p>
             <a
-              href="mailto:contact@example.com"
+              href="mailto:ashwinsingh632@gmail.com"
               className="inline-flex items-center text-purple-600 font-medium hover:text-purple-700"
             >
               Contact Us
