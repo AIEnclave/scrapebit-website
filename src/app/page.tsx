@@ -10,7 +10,7 @@ export default function Home() {
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900">
               The Next Gen
-              <span className="bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent"> AI Web Scraper</span>
+              <span className="bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent"> ScrapeBit</span>
             </h1>
             <p className="mt-6 text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
               Scrape leads & other data in just 2-clicks. Built for sales & ops teams. Powered by AI.

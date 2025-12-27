@@ -237,7 +237,7 @@ export default function PricingPage() {
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {[
-                  { feature: 'AI Web Scraper', free: true, starter: true, pro: true, business: true },
+                  { feature: 'ScrapeBit', free: true, starter: true, pro: true, business: true },
                   { feature: 'Subpage Scraping', free: false, starter: true, pro: true, business: true },
                   { feature: 'Pre-built Templates', free: false, starter: true, pro: true, business: true },
                   { feature: 'Bulk Scraping', free: false, starter: true, pro: true, business: true },
