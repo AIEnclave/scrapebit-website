@@ -87,7 +87,7 @@ export default async function ScrapersPage() {
       <PublicHeader variant="light" currentPage="scrapers" />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-blue-50 pt-20">
+      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-blue-50 pt-28">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-4">

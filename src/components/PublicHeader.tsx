@@ -4,16 +4,16 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
 interface PublicHeaderProps {
-  variant?: 'light' | 'dark' | 'transparent'
+  variant?: 'light' | 'dark'
   currentPage?: string
 }
 
-export default function PublicHeader({ variant = 'transparent', currentPage = '' }: PublicHeaderProps) {
+export default function PublicHeader({ variant = 'dark', currentPage = '' }: PublicHeaderProps) {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      setScrolled(window.scrollY > 20)
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -25,99 +25,143 @@ export default function PublicHeader({ variant = 'transparent', currentPage = ''
     { name: 'Pricing', href: '/pricing' },
   ]
 
-  // Determine styles based on variant and scroll state
-  const getHeaderStyles = () => {
-    if (variant === 'dark' || variant === 'transparent') {
-      return scrolled
-        ? 'bg-slate-950/80 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20'
-        : 'bg-transparent'
-    }
-    // Light variant
-    return scrolled
-      ? 'bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm'
-      : 'bg-white border-b border-gray-100'
-  }
-
-  const getTextColor = () => {
-    if (variant === 'dark' || variant === 'transparent') return 'text-slate-400 hover:text-white'
-    return 'text-gray-600 hover:text-gray-900'
-  }
-
-  const getActiveColor = () => {
-    if (variant === 'dark' || variant === 'transparent') return 'text-white'
-    return 'text-purple-600'
-  }
-
-  const getLogoTextColor = () => {
-    if (variant === 'dark' || variant === 'transparent') return 'from-white to-slate-300'
-    return 'from-gray-900 to-gray-700'
-  }
-
-  const isDark = variant === 'dark' || variant === 'transparent'
+  const isDark = variant === 'dark'
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${getHeaderStyles()}`}>
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex w-full items-center justify-between py-4">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className={`w-9 h-9 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg transition-all duration-300 ${
-              scrolled ? 'shadow-purple-500/20' : 'shadow-purple-500/25'
-            } group-hover:shadow-purple-500/40`}>
-              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
+      <nav className={`mx-auto max-w-6xl transition-all duration-500 ease-out ${
+        scrolled
+          ? 'py-2'
+          : 'py-3'
+      }`}>
+        {/* Glassmorphism container */}
+        <div className={`relative rounded-2xl transition-all duration-500 ${
+          scrolled
+            ? isDark
+              ? 'bg-slate-900/70 shadow-lg shadow-black/10'
+              : 'bg-white/70 shadow-lg shadow-black/5'
+            : isDark
+              ? 'bg-slate-900/40'
+              : 'bg-white/40'
+        } backdrop-blur-xl`}>
+          {/* Gradient border effect */}
+          <div className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${
+            scrolled ? 'opacity-100' : 'opacity-50'
+          }`}>
+            <div className={`absolute inset-0 rounded-2xl ${
+              isDark
+                ? 'bg-gradient-to-r from-purple-500/20 via-transparent to-cyan-500/20'
+                : 'bg-gradient-to-r from-purple-500/10 via-transparent to-cyan-500/10'
+            }`} style={{ padding: '1px' }}>
+              <div className={`w-full h-full rounded-2xl ${
+                isDark ? 'bg-slate-900/90' : 'bg-white/90'
+              } backdrop-blur-xl`} />
             </div>
-            <span className={`text-xl font-bold bg-gradient-to-r ${getLogoTextColor()} bg-clip-text text-transparent`}>
-              Scrapebit
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => {
-              const isActive = currentPage === item.name.toLowerCase() ||
-                              (currentPage === '' && item.href === '/') ||
-                              (item.href !== '/' && currentPage.startsWith(item.href.slice(1)))
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`text-sm transition-colors ${
-                    isActive ? getActiveColor() : getTextColor()
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              )
-            })}
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex items-center gap-3">
-            <Link
-              href="/login"
-              className={`text-sm transition-colors px-4 py-2 ${getTextColor()}`}
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/signup"
-              className={`group relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-cyan-600 rounded-xl overflow-hidden transition-all hover:shadow-lg hover:shadow-purple-500/25 ${
-                scrolled && isDark ? 'shadow-md shadow-purple-500/20' : ''
-              }`}
-            >
-              <span className="relative z-10">Start Free</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </Link>
-          </div>
+          {/* Inner border glow */}
+          <div className={`absolute inset-[1px] rounded-2xl border transition-all duration-500 ${
+            isDark
+              ? scrolled ? 'border-white/10' : 'border-white/5'
+              : scrolled ? 'border-gray-200/80' : 'border-gray-200/40'
+          }`} />
 
-          {/* Mobile Menu Button */}
-          <button className={`md:hidden p-2 rounded-lg ${isDark ? 'hover:bg-slate-800' : 'hover:bg-gray-100'}`}>
-            <svg className={`w-6 h-6 ${isDark ? 'text-white' : 'text-gray-700'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
+          {/* Content */}
+          <div className="relative flex items-center justify-between px-4 sm:px-6 py-3">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="relative">
+                {/* Logo glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
+                <div className="relative w-9 h-9 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
+                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+              </div>
+              <span className={`text-xl font-bold bg-gradient-to-r bg-clip-text text-transparent ${
+                isDark
+                  ? 'from-white to-slate-300'
+                  : 'from-gray-900 to-gray-600'
+              }`}>
+                Scrapebit
+              </span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center">
+              <div className={`flex items-center gap-1 p-1 rounded-xl ${
+                isDark ? 'bg-white/5' : 'bg-gray-100/80'
+              }`}>
+                {navItems.map((item) => {
+                  const isActive = currentPage === item.name.toLowerCase() ||
+                                  (currentPage === '' && item.href === '/') ||
+                                  (item.href !== '/' && currentPage.startsWith(item.href.slice(1)))
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                        isActive
+                          ? isDark
+                            ? 'text-white bg-white/10'
+                            : 'text-gray-900 bg-white shadow-sm'
+                          : isDark
+                            ? 'text-slate-400 hover:text-white hover:bg-white/5'
+                            : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex items-center gap-3">
+              <Link
+                href="/login"
+                className={`hidden sm:block text-sm font-medium px-4 py-2 rounded-lg transition-all duration-300 ${
+                  isDark
+                    ? 'text-slate-300 hover:text-white hover:bg-white/5'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                }`}
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                className="group relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white rounded-xl overflow-hidden transition-all duration-300 hover:scale-105"
+              >
+                {/* Button gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-cyan-600" />
+                {/* Hover glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Shine effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                </div>
+                <span className="relative z-10 flex items-center gap-1.5">
+                  Start Free
+                  <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+              </Link>
+
+              {/* Mobile Menu Button */}
+              <button className={`md:hidden p-2 rounded-lg transition-colors ${
+                isDark
+                  ? 'text-slate-300 hover:text-white hover:bg-white/10'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+              }`}>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
       </nav>
     </header>

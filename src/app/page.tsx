@@ -625,62 +625,121 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
   return <span ref={ref}>{count.toLocaleString()}{suffix}</span>
 }
 
-// Sticky Header Component
+// Sticky Header Component - Modern Glassmorphism Design
 function StickyHeader() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      setScrolled(window.scrollY > 20)
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled
-        ? 'bg-slate-950/80 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20'
-        : 'bg-transparent'
-    }`}>
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex w-full items-center justify-between py-4">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className={`w-9 h-9 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg transition-all duration-300 ${
-              scrolled ? 'shadow-purple-500/20' : 'shadow-purple-500/25'
-            } group-hover:shadow-purple-500/40`}>
-              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">Scrapebit</span>
-          </Link>
+  const navItems = [
+    { name: 'Home', href: '/' },
+    { name: 'Scrapers', href: '/scrapers' },
+    { name: 'Pricing', href: '/pricing' },
+  ]
 
-          <div className="hidden md:flex items-center gap-8">
-            {[
-              { name: 'Home', href: '/' },
-              { name: 'Scrapers', href: '/scrapers' },
-              { name: 'Pricing', href: '/pricing' },
-            ].map(item => (
-              <Link key={item.name} href={item.href} className="text-sm text-slate-400 hover:text-white transition-colors">
-                {item.name}
-              </Link>
-            ))}
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
+      <nav className={`mx-auto max-w-6xl transition-all duration-500 ease-out ${
+        scrolled ? 'py-2' : 'py-3'
+      }`}>
+        {/* Glassmorphism container */}
+        <div className={`relative rounded-2xl transition-all duration-500 ${
+          scrolled
+            ? 'bg-slate-900/70 shadow-lg shadow-black/10'
+            : 'bg-slate-900/40'
+        } backdrop-blur-xl`}>
+          {/* Gradient border effect */}
+          <div className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${
+            scrolled ? 'opacity-100' : 'opacity-50'
+          }`}>
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/20 via-transparent to-cyan-500/20" style={{ padding: '1px' }}>
+              <div className="w-full h-full rounded-2xl bg-slate-900/90 backdrop-blur-xl" />
+            </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Link href="/login" className="text-sm text-slate-400 hover:text-white transition-colors px-4 py-2">
-              Sign In
+          {/* Inner border glow */}
+          <div className={`absolute inset-[1px] rounded-2xl border transition-all duration-500 ${
+            scrolled ? 'border-white/10' : 'border-white/5'
+          }`} />
+
+          {/* Content */}
+          <div className="relative flex items-center justify-between px-4 sm:px-6 py-3">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="relative">
+                {/* Logo glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
+                <div className="relative w-9 h-9 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
+                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+                Scrapebit
+              </span>
             </Link>
-            <Link
-              href="/signup"
-              className={`group relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-cyan-600 rounded-xl overflow-hidden transition-all hover:shadow-lg hover:shadow-purple-500/25 ${
-                scrolled ? 'shadow-md shadow-purple-500/20' : ''
-              }`}
-            >
-              <span className="relative z-10">Start Free</span>
-              <div className="absolute inset-0 animate-shimmer" />
-            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center">
+              <div className="flex items-center gap-1 p-1 rounded-xl bg-white/5">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                      item.href === '/'
+                        ? 'text-white bg-white/10'
+                        : 'text-slate-400 hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex items-center gap-3">
+              <Link
+                href="/login"
+                className="hidden sm:block text-sm font-medium px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-300"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                className="group relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white rounded-xl overflow-hidden transition-all duration-300 hover:scale-105"
+              >
+                {/* Button gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-cyan-600" />
+                {/* Hover glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Shine effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                </div>
+                <span className="relative z-10 flex items-center gap-1.5">
+                  Start Free
+                  <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+              </Link>
+
+              {/* Mobile Menu Button */}
+              <button className="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </nav>

@@ -12,7 +12,7 @@ export default function SupportPage() {
   return (
     <div className="bg-white min-h-screen">
       <PublicHeader variant="light" currentPage="support" />
-      <div className="pt-16">
+      <div className="pt-24">
         <Suspense fallback={<SupportLoading />}>
           <SupportContent />
         </Suspense>
