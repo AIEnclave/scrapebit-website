@@ -3,8 +3,9 @@
 @theme inline {
   --color-background: #ffffff;
   --color-foreground: #171717;
-  --font-sans: var(--font-inter);
-  
+  --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-heading), system-ui, -apple-system, sans-serif;
+
   /* Brand colors */
   --color-brand-950: #0f0a1e;
   --color-brand-900: #1a1033;
@@ -18,7 +19,7 @@
   --color-brand-100: #ede9fe;
   --color-brand-50: #f5f3ff;
   --color-brand-25: #faf8ff;
-  
+
   /* Accent colors */
   --color-accent-900: #083344;
   --color-accent-800: #155e75;
@@ -30,7 +31,7 @@
   --color-accent-200: #a5f3fc;
   --color-accent-100: #cffafe;
   --color-accent-50: #ecfeff;
-  
+
   /* Magenta colors */
   --color-magenta-900: #4a044e;
   --color-magenta-800: #6b216e;
@@ -42,7 +43,7 @@
   --color-magenta-200: #f5d0fe;
   --color-magenta-100: #fae8ff;
   --color-magenta-50: #fdf4ff;
-  
+
   /* Gray blue colors */
   --color-grayblue-900: #0f172a;
   --color-grayblue-800: #1e293b;
@@ -55,7 +56,7 @@
   --color-grayblue-100: #f1f5f9;
   --color-grayblue-50: #f8fafc;
   --color-grayblue-8: #fafbfc;
-  
+
   /* Semantic colors */
   --color-title: #1a1a2e;
   --color-body: #4a5568;
@@ -73,7 +74,24 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* Heading font utility */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Apply heading font to all headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+/* Smooth text rendering */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 article a {
@@ -96,7 +114,30 @@ article a:hover {
   @apply text-blue-300;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar for dark theme */
+.bg-slate-950::-webkit-scrollbar,
+.bg-slate-900::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.bg-slate-950::-webkit-scrollbar-track,
+.bg-slate-900::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+.bg-slate-950::-webkit-scrollbar-thumb,
+.bg-slate-900::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+
+.bg-slate-950::-webkit-scrollbar-thumb:hover,
+.bg-slate-900::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Custom scrollbar for light theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -118,4 +159,10 @@ article a:hover {
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Selection color for dark theme */
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: inherit;
 }

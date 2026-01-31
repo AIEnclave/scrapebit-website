@@ -11,6 +11,7 @@ interface User {
 interface AuthState {
   user: User | null
   loading: boolean
+  setUser: (user: User | null) => void
   checkAuth: () => Promise<void>
   signOut: () => Promise<void>
 }
@@ -18,6 +19,8 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   loading: true,
+
+  setUser: (user) => set({ user, loading: false }),
 
   checkAuth: async () => {
     try {

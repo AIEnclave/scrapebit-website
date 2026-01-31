@@ -1,357 +1,552 @@
+'use client'
+
 import Link from 'next/link'
-import type { Metadata } from 'next'
+import { useEffect, useRef, useState } from 'react'
+import BuyCredits from '@/components/BuyCredits'
+import { Zap, Check, HelpCircle, Mail, Shield, Clock, Download, Globe, Sparkles, RotateCcw, ArrowRight } from 'lucide-react'
 
-export const metadata: Metadata = {
-  title: 'Pricing - Scrapebit',
-  description: 'Choose the perfect plan for your web scraping needs. Free tier available with powerful features.',
-}
-
-const plans = [
+const creditPacks = [
   {
-    name: 'Free',
-    price: '$0',
-    period: '/month',
-    description: 'Perfect for trying out AI Scraper',
-    features: [
-      '6 pages / month',
-      'Maximum 30 credits per page',
-      'Data Export (CSV, JSON)',
-      'Data Extraction Tools',
-      '14 Days Data Retention',
-      'Up to 5 Scrapers',
-      '1 Scheduled Scraper',
-    ],
-    cta: 'Get Started Free',
-    popular: false,
-  },
-  {
-    name: 'Starter',
-    price: '$9',
-    period: '/month',
-    description: 'Billed yearly. All credits upfront.',
-    features: [
-      '5,000 credits/year',
-      'Everything in Free, plus:',
-      'Subpage Scraping',
-      'Pre-built Scraper Templates',
-      'Bulk Scraping (2,000 URLs)',
-      'Pagination (200 pages)',
-      'Data Enrichment',
-      '60 Days Data Retention',
-      'Up to 30 Scrapers',
-      'Up to 5 Scheduled Scrapers',
-    ],
-    cta: 'Get Started',
-    popular: false,
-  },
-  {
-    name: 'Pro',
-    price: '$16.50',
-    originalPrice: '$24',
-    period: '/month',
-    description: 'Billed yearly. All credits upfront.',
-    badge: 'Most Popular',
-    discount: '31% off',
-    features: [
-      '30,000 credits/year',
-      'Everything in Starter, plus:',
-      'Unlimited Data Retention',
-      'Unlimited Scrapers',
-      'Up to 25 Scheduled Scrapers',
-      'Minimum Monitor Frequency (5 mins)',
-      'Priority Support',
-    ],
-    cta: 'Get Started',
+    credits: 500,
+    price: 10,
+    perCredit: 0.02,
     popular: true,
+    description: 'Perfect for getting started',
   },
   {
-    name: 'Business',
-    price: 'Custom',
-    period: '',
-    description: 'Custom pricing and billing terms.',
-    features: [
-      'Custom Credits',
-      'Custom Limits',
-      'Priority Support',
-      'Dedicated Account Management',
-      'Custom Integrations',
-      'SLA Guarantee',
-      'Invoice Billing',
-    ],
-    cta: 'Contact Us',
+    credits: 1000,
+    price: 18,
+    perCredit: 0.018,
+    savings: '10%',
     popular: false,
+    description: 'Great for regular scrapers',
+  },
+  {
+    credits: 2500,
+    price: 40,
+    perCredit: 0.016,
+    savings: '20%',
+    popular: false,
+    description: 'Best value for power users',
+  },
+]
+
+const premiumFeatures = [
+  {
+    icon: Sparkles,
+    title: 'AI-Powered Extraction',
+    description: 'Natural language commands to extract exactly what you need. No CSS selectors required.',
+    gradient: 'from-brand-500 to-brand-600',
+    bgColor: 'bg-brand-50',
+  },
+  {
+    icon: Download,
+    title: 'Export Anywhere',
+    description: 'One-click export to Google Sheets, Notion, Airtable, or download as CSV/JSON.',
+    gradient: 'from-accent-500 to-accent-600',
+    bgColor: 'bg-accent-50',
+  },
+  {
+    icon: Clock,
+    title: 'Scheduled Scraping',
+    description: 'Set up recurring scrapes to automatically collect data at your preferred intervals.',
+    gradient: 'from-success-500 to-success-400',
+    bgColor: 'bg-success-100',
+  },
+  {
+    icon: Globe,
+    title: 'Subpage Scraping',
+    description: 'Automatically visit and extract data from linked pages to enrich your dataset.',
+    gradient: 'from-warning-500 to-warning-400',
+    bgColor: 'bg-warning-100',
   },
 ]
 
 const faqs = [
   {
     question: 'What is a Credit?',
-    answer: 'A credit is used each time you scrape a page. Different actions consume different amounts of credits. Basic page scrapes typically use 1 credit, while AI-powered extractions may use more.',
+    answer: 'A credit is used each time you scrape a page. 1 credit = 1 page scraped. Simple and straightforward.',
   },
   {
-    question: 'What is the difference between the Free and Starter plans?',
-    answer: 'The Free plan offers basic scraping capabilities with limited pages per month. Starter unlocks advanced features like subpage scraping, bulk scraping, pagination support, and significantly more credits.',
+    question: 'Do credits expire?',
+    answer: 'No! Credits you purchase never expire. Use them whenever you need.',
   },
   {
-    question: 'What happens if I exceed my monthly credits?',
-    answer: 'You\'ll receive a notification when approaching your limit. You can upgrade your plan or wait for your credits to refresh at the start of your next billing cycle.',
+    question: 'What can I do with credits?',
+    answer: 'Credits unlock all features including AI extraction, exports to Google Sheets/Notion, scheduled scrapes, webhooks, and more.',
   },
   {
-    question: 'Can I switch between monthly and yearly plans?',
-    answer: 'Yes, you can switch between billing cycles at any time. When switching to yearly, you\'ll receive a prorated discount. Yearly plans offer up to 20% savings.',
-  },
-  {
-    question: 'What is included in the Free Trial?',
-    answer: 'The free tier gives you access to core features with limited usage. No credit card required to start. You can upgrade anytime to unlock more features and higher limits.',
+    question: 'What payment methods do you accept?',
+    answer: 'We accept all major credit cards, debit cards, UPI, and net banking through Razorpay.',
   },
   {
     question: 'What is the refund policy?',
-    answer: 'We offer a 7-day refund policy for annual subscriptions if you\'re not satisfied. Monthly subscriptions can be cancelled anytime. See our Refund Policy for full details.',
+    answer: 'We offer a 14-day money-back guarantee. If you\'re not satisfied, email us for a full refund. No questions asked.',
+  },
+  {
+    question: 'Do you offer subscriptions?',
+    answer: 'Currently we offer pay-per-use credit packs only. This gives you more flexibility - buy credits when you need them, no recurring charges.',
   },
 ]
 
+// Scroll-animated section wrapper
+function AnimatedSection({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setIsVisible(true), delay)
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    )
+
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [delay])
+
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      } ${className}`}
+    >
+      {children}
+    </div>
+  )
+}
+
 export default function PricingPage() {
   return (
-    <div className="bg-white">
-      {/* Header */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-blue-50" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">
-              Scrape Any Website in Just 2-Clicks
-            </h1>
-            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-              No CSS Selectors or Complex Drag-and-Drop. Start Automating Your Browser with AI Today.
-            </p>
-            
-            {/* Billing Toggle */}
-            <div className="mt-8 flex items-center justify-center gap-4">
-              <span className="text-sm font-medium text-gray-500">Monthly</span>
-              <button className="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-purple-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
-                <span className="translate-x-5 inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out" />
-              </button>
-              <span className="text-sm font-medium text-gray-900">
-                Yearly <span className="text-green-600 font-semibold">Save 20%</span>
-              </span>
+    <div className="bg-white min-h-screen">
+      {/* CSS for custom animations */}
+      <style jsx global>{`
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+          50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.5); }
+        }
+        .animate-shimmer {
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+          background-size: 200% 100%;
+          animation: shimmer 2s infinite;
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+        .animate-pulse-glow {
+          animation: pulse-glow 2s ease-in-out infinite;
+        }
+      `}</style>
+
+      {/* Dark Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-brand-950/95 backdrop-blur-xl border-b border-white/5">
+        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex w-full items-center justify-between py-4">
+            <Link href="/" className="flex items-center gap-2 group">
+              <div className="w-9 h-9 bg-gradient-to-br from-brand-500 to-accent-500 rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/25">
+                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-white to-grayblue-300 bg-clip-text text-transparent">Scrapebit</span>
+            </Link>
+
+            <div className="hidden md:flex items-center gap-8">
+              {['Home', 'Features', 'Pricing', 'API Docs'].map(item => (
+                <Link key={item} href={item === 'Home' ? '/' : item === 'API Docs' ? '/docs' : `/${item.toLowerCase()}`} className={`text-sm transition-colors ${item === 'Pricing' ? 'text-white' : 'text-grayblue-400 hover:text-white'}`}>
+                  {item}
+                </Link>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Link href="/login" className="text-sm text-grayblue-400 hover:text-white transition-colors px-4 py-2">
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                className="group relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-brand-600 to-accent-600 rounded-xl overflow-hidden transition-all hover:shadow-lg hover:shadow-brand-500/25"
+              >
+                <span className="relative z-10">Start Free</span>
+                <div className="absolute inset-0 animate-shimmer" />
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
+        </nav>
+      </header>
 
-      {/* Pricing Cards */}
-      <section className="pb-20 -mt-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`relative bg-white rounded-2xl border ${
-                  plan.popular
-                    ? 'border-purple-500 shadow-xl shadow-purple-100'
-                    : 'border-gray-200 shadow-sm'
-                } p-6 flex flex-col`}
-              >
-                {plan.badge && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="inline-flex items-center rounded-full bg-purple-600 px-3 py-1 text-xs font-semibold text-white">
-                      {plan.badge}
-                    </span>
-                  </div>
-                )}
-                
-                {plan.discount && (
-                  <div className="absolute top-4 right-4">
-                    <span className="inline-flex items-center rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
-                      {plan.discount}
-                    </span>
-                  </div>
-                )}
+      {/* Dark Hero Section */}
+      <section className="relative overflow-hidden pt-32 pb-20 bg-brand-950">
+        {/* Background effects */}
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-900/20 via-brand-950 to-brand-950" />
+        <div className="absolute top-20 left-1/4 w-[400px] h-[400px] bg-brand-500/20 rounded-full blur-[120px]" />
+        <div className="absolute top-40 right-1/4 w-[300px] h-[300px] bg-accent-500/20 rounded-full blur-[100px]" />
 
-                <h3 className="text-lg font-semibold text-gray-900">{plan.name}</h3>
-                
-                <div className="mt-4 flex items-baseline">
-                  {plan.originalPrice && (
-                    <span className="text-lg text-gray-400 line-through mr-2">
-                      {plan.originalPrice}
-                    </span>
-                  )}
-                  <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                  <span className="ml-1 text-gray-500">{plan.period}</span>
-                </div>
-                
-                <p className="mt-2 text-sm text-gray-500">{plan.description}</p>
-
-                <ul className="mt-6 space-y-3 flex-grow">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <svg
-                        className="h-5 w-5 flex-shrink-0 text-purple-500 mt-0.5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span className="text-sm text-gray-600">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Link
-                  href={plan.name === 'Business' ? 'mailto:ashwinsingh632@gmail.com' : '#'}
-                  className={`mt-6 block w-full rounded-lg px-4 py-2.5 text-center text-sm font-semibold transition-all ${
-                    plan.popular
-                      ? 'bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-700 hover:to-blue-600 shadow-md'
-                      : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
-                  }`}
-                >
-                  {plan.cta}
-                </Link>
-              </div>
-            ))}
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-sm text-brand-300 mb-6">
+              <Zap className="w-4 h-4" />
+              Simple, Transparent Pricing
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
+              <span className="text-white">Pay Only For</span>
+              <br />
+              <span className="bg-gradient-to-r from-brand-400 via-accent-400 to-brand-400 bg-clip-text text-transparent">
+                What You Use
+              </span>
+            </h1>
+            <p className="mt-6 text-lg text-grayblue-400 max-w-2xl mx-auto">
+              No subscriptions, no monthly fees, no surprises. Buy credits when you need them, use them whenever you want.
+            </p>
           </div>
         </div>
+
+        {/* Transition wave */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0 80L60 74.7C120 69 240 59 360 53.3C480 48 600 48 720 53.3C840 59 960 69 1080 69.3C1200 69 1320 59 1380 53.3L1440 48V80H1380C1320 80 1200 80 1080 80C960 80 840 80 720 80C600 80 480 80 360 80C240 80 120 80 60 80H0Z" fill="white"/>
+          </svg>
+        </div>
       </section>
 
-      {/* Feature Comparison Table */}
-      <section className="py-16 bg-gray-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-gray-900 text-center mb-12">
-            Compare Plans
-          </h2>
-          
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="py-4 px-4 text-left text-sm font-semibold text-gray-900">Feature</th>
-                  <th className="py-4 px-4 text-center text-sm font-semibold text-gray-900">Free</th>
-                  <th className="py-4 px-4 text-center text-sm font-semibold text-gray-900">Starter</th>
-                  <th className="py-4 px-4 text-center text-sm font-semibold text-purple-600">Pro</th>
-                  <th className="py-4 px-4 text-center text-sm font-semibold text-gray-900">Business</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
+      {/* Light Credit Packs Section */}
+      <section className="py-16 bg-white">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          {/* Credit Packs Grid */}
+          <div className="grid md:grid-cols-3 gap-6 mb-16">
+            {creditPacks.map((pack, index) => (
+              <AnimatedSection key={index} delay={index * 100}>
+                <div
+                  className={`relative rounded-2xl p-6 transition-all duration-300 h-full ${
+                    pack.popular
+                      ? 'bg-gradient-to-br from-brand-600 to-magenta-600 shadow-xl shadow-brand-500/20 scale-105 md:scale-110 animate-pulse-glow text-white'
+                      : 'bg-white border-2 border-grayblue-200 hover:border-brand-300 hover:shadow-lg'
+                  }`}
+                >
+                  {pack.popular && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                      <span className="inline-flex items-center rounded-full bg-amber-400 px-3 py-1 text-xs font-semibold text-amber-900 shadow-lg">
+                        Most Popular
+                      </span>
+                    </div>
+                  )}
+
+                  {pack.savings && !pack.popular && (
+                    <div className="absolute -top-3 right-4">
+                      <span className="inline-flex items-center rounded-full bg-success-100 border border-success-400 px-2 py-0.5 text-xs font-semibold text-success-500">
+                        Save {pack.savings}
+                      </span>
+                    </div>
+                  )}
+
+                  <div className={`flex items-center gap-2 mb-2 ${pack.popular ? 'text-white/80' : 'text-grayblue-600'}`}>
+                    <Zap className={`w-5 h-5 ${pack.popular ? 'text-amber-300' : 'text-amber-500'}`} />
+                    <span className="text-sm font-medium">{pack.credits.toLocaleString()} Credits</span>
+                  </div>
+
+                  <div className="mb-2">
+                    <span className={`text-4xl font-bold ${pack.popular ? 'text-white' : 'text-title'}`}>
+                      ${pack.price}
+                    </span>
+                  </div>
+
+                  <p className={`text-sm mb-4 ${pack.popular ? 'text-brand-100' : 'text-grayblue-500'}`}>
+                    ${pack.perCredit.toFixed(3)} per credit
+                  </p>
+
+                  <p className={`text-sm ${pack.popular ? 'text-brand-100' : 'text-body'}`}>
+                    {pack.description}
+                  </p>
+
+                  {pack.popular && (
+                    <div className="mt-6">
+                      <BuyCredits variant="card" onSuccess={() => window.location.reload()} />
+                    </div>
+                  )}
+
+                  {!pack.popular && (
+                    <button
+                      className="mt-6 w-full py-2.5 px-4 rounded-lg border-2 border-grayblue-300 text-grayblue-600 font-medium hover:border-brand-400 hover:text-brand-600 transition-all"
+                    >
+                      Coming Soon
+                    </button>
+                  )}
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+
+          {/* Value Proposition */}
+          <AnimatedSection>
+            <div className="bg-gradient-to-br from-grayblue-50 to-brand-50 border border-grayblue-200 rounded-2xl p-6 sm:p-8 text-center">
+              <h3 className="text-xl font-bold text-title mb-6">Why Pay-Per-Use?</h3>
+              <div className="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 bg-success-100 rounded-xl flex items-center justify-center mb-3">
+                    <Check className="w-6 h-6 text-success-500" />
+                  </div>
+                  <h4 className="font-semibold text-title mb-1">No Subscriptions</h4>
+                  <p className="text-sm text-body">No recurring fees, cancel anytime</p>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 bg-accent-100 rounded-xl flex items-center justify-center mb-3">
+                    <Clock className="w-6 h-6 text-accent-600" />
+                  </div>
+                  <h4 className="font-semibold text-title mb-1">Never Expires</h4>
+                  <p className="text-sm text-body">Use credits at your own pace</p>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center mb-3">
+                    <Sparkles className="w-6 h-6 text-brand-600" />
+                  </div>
+                  <h4 className="font-semibold text-title mb-1">All Features</h4>
+                  <p className="text-sm text-body">Full access with any credit pack</p>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Light Premium Features Section */}
+      <section className="py-16 bg-grayblue-50">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="text-center mb-12">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-100 border border-brand-200 text-sm text-brand-700 mb-4">
+              <Sparkles className="w-4 h-4" />
+              Premium Features
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-title">
+              Everything Unlocked with Credits
+            </h2>
+            <p className="mt-4 text-lg text-body max-w-2xl mx-auto">
+              No feature gates, no premium tiers. Every credit gives you access to all our powerful features.
+            </p>
+          </AnimatedSection>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {premiumFeatures.map((feature, index) => (
+              <AnimatedSection key={index} delay={index * 100}>
+                <div className="group p-6 rounded-2xl bg-white border border-grayblue-200 hover:border-brand-300 hover:shadow-lg transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      <feature.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-title mb-1 group-hover:text-brand-600 transition-colors">
+                        {feature.title}
+                      </h3>
+                      <p className="text-body">{feature.description}</p>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+
+          {/* Additional Features List */}
+          <AnimatedSection className="mt-8">
+            <div className="bg-white border border-grayblue-200 rounded-2xl p-6">
+              <h3 className="text-lg font-semibold text-title mb-4 text-center">Also Included</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { feature: 'ScrapeBit', free: true, starter: true, pro: true, business: true },
-                  { feature: 'Subpage Scraping', free: false, starter: true, pro: true, business: true },
-                  { feature: 'Pre-built Templates', free: false, starter: true, pro: true, business: true },
-                  { feature: 'Bulk Scraping', free: false, starter: true, pro: true, business: true },
-                  { feature: 'Max URLs per Bulk Scrape', free: '3', starter: '2,000', pro: '2,000', business: 'Custom' },
-                  { feature: 'Pagination', free: false, starter: true, pro: true, business: true },
-                  { feature: 'Max Paginated Pages', free: '3', starter: '200', pro: '200', business: 'Custom' },
-                  { feature: 'Data Enrichment', free: false, starter: true, pro: true, business: true },
-                  { feature: 'Data Retention', free: '14 Days', starter: '60 Days', pro: 'Unlimited', business: 'Custom' },
-                  { feature: 'Max Scrapers', free: '5', starter: '30', pro: 'Unlimited', business: 'Custom' },
-                  { feature: 'Max Scheduled Scrapers', free: '1', starter: '5', pro: '25', business: 'Custom' },
-                  { feature: 'Data Export', free: true, starter: true, pro: true, business: true },
-                ].map((row, index) => (
-                  <tr key={index} className="hover:bg-gray-100">
-                    <td className="py-4 px-4 text-sm text-gray-600">{row.feature}</td>
-                    <td className="py-4 px-4 text-center">
-                      {typeof row.free === 'boolean' ? (
-                        row.free ? (
-                          <svg className="h-5 w-5 text-green-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        ) : (
-                          <svg className="h-5 w-5 text-gray-300 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                          </svg>
-                        )
-                      ) : (
-                        <span className="text-sm text-gray-600">{row.free}</span>
-                      )}
-                    </td>
-                    <td className="py-4 px-4 text-center">
-                      {typeof row.starter === 'boolean' ? (
-                        row.starter ? (
-                          <svg className="h-5 w-5 text-green-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        ) : (
-                          <svg className="h-5 w-5 text-gray-300 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                          </svg>
-                        )
-                      ) : (
-                        <span className="text-sm text-gray-600">{row.starter}</span>
-                      )}
-                    </td>
-                    <td className="py-4 px-4 text-center bg-purple-50">
-                      {typeof row.pro === 'boolean' ? (
-                        row.pro ? (
-                          <svg className="h-5 w-5 text-green-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        ) : (
-                          <svg className="h-5 w-5 text-gray-300 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                          </svg>
-                        )
-                      ) : (
-                        <span className="text-sm font-medium text-purple-600">{row.pro}</span>
-                      )}
-                    </td>
-                    <td className="py-4 px-4 text-center">
-                      {typeof row.business === 'boolean' ? (
-                        row.business ? (
-                          <svg className="h-5 w-5 text-green-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        ) : (
-                          <svg className="h-5 w-5 text-gray-300 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                          </svg>
-                        )
-                      ) : (
-                        <span className="text-sm text-gray-600">{row.business}</span>
-                      )}
-                    </td>
-                  </tr>
+                  'Pre-built templates',
+                  'Webhook integration',
+                  'Zapier connection',
+                  'AI summarization',
+                  'Translation support',
+                  'Priority support',
+                  'Chrome extension',
+                  'Bulk operations',
+                ].map((feature, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <Check className="w-5 h-5 text-success-500 flex-shrink-0" />
+                    <span className="text-sm text-title">{feature}</span>
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* How Credits Work */}
+      <section className="py-16 bg-white">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-title">How Credits Work</h2>
+            <p className="mt-4 text-body">Simple math, no hidden costs</p>
+          </AnimatedSection>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: '⚡',
+                title: '1 Credit = 1 Page',
+                description: 'Each page you scrape uses exactly 1 credit. Simple and predictable.',
+              },
+              {
+                icon: '♾️',
+                title: 'Never Expire',
+                description: 'Your credits are yours forever. Use them at your own pace, no rush.',
+              },
+              {
+                icon: '🔓',
+                title: 'All Features',
+                description: 'Every feature is included. No premium tiers or upsells.',
+              },
+            ].map((item, index) => (
+              <AnimatedSection key={index} delay={index * 100}>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-grayblue-100 border border-grayblue-200 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <span className="text-3xl">{item.icon}</span>
+                  </div>
+                  <h3 className="font-semibold text-title mb-2">{item.title}</h3>
+                  <p className="text-sm text-body">{item.description}</p>
+                </div>
+              </AnimatedSection>
+            ))}
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20">
+      <section className="py-16 bg-grayblue-50">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-gray-900 text-center mb-12">
-            Frequently Asked Questions
-          </h2>
-          
-          <div className="space-y-6">
+          <AnimatedSection className="text-center mb-12">
+            <h2 className="text-2xl font-bold text-title">
+              Frequently Asked Questions
+            </h2>
+          </AnimatedSection>
+
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-gray-200 pb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {faq.question}
-                </h3>
-                <p className="text-gray-600">{faq.answer}</p>
-              </div>
+              <AnimatedSection key={index} delay={index * 50}>
+                <div className="bg-white border border-grayblue-200 rounded-xl p-5 hover:border-brand-300 hover:shadow-md transition-all">
+                  <h3 className="text-base font-semibold text-title mb-2 flex items-start gap-2">
+                    <HelpCircle className="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5" />
+                    {faq.question}
+                  </h3>
+                  <p className="text-body pl-7 text-sm">{faq.answer}</p>
+                </div>
+              </AnimatedSection>
             ))}
           </div>
-          
-          <div className="mt-12 text-center">
-            <p className="text-gray-600 mb-4">Still have questions?</p>
+
+          <AnimatedSection className="mt-8 text-center">
+            <p className="text-body mb-4">Still have questions?</p>
             <a
               href="mailto:ashwinsingh632@gmail.com"
-              className="inline-flex items-center text-purple-600 font-medium hover:text-purple-700"
+              className="inline-flex items-center gap-2 text-brand-600 font-medium hover:text-brand-700 transition-colors"
             >
+              <Mail className="w-4 h-4" />
               Contact Us
-              <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
             </a>
-          </div>
+          </AnimatedSection>
         </div>
       </section>
+
+      {/* Refund Policy Banner */}
+      <section className="py-12 bg-white">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <div className="bg-gradient-to-br from-success-100 to-emerald-50 border-2 border-success-400 rounded-2xl p-8">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <div className="w-16 h-16 bg-success-100 border border-success-400 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <RotateCcw className="w-8 h-8 text-success-500" />
+                </div>
+                <div className="text-center md:text-left flex-1">
+                  <h3 className="text-xl font-bold text-success-500 mb-2">14-Day Money-Back Guarantee</h3>
+                  <p className="text-body">
+                    Not satisfied with your purchase? No problem. Request a full refund within 14 days of your purchase - no questions asked.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <a
+                    href="mailto:ashwinsingh632@gmail.com?subject=Refund Request&body=Hi,%0A%0AI would like to request a refund for my recent credit purchase.%0A%0AAccount Email: [Your email]%0APurchase Date: [Date]%0AReason (optional): [Your reason]%0A%0AThank you."
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-success-500 hover:bg-success-400 text-white font-medium rounded-lg transition-colors shadow-lg"
+                  >
+                    <Mail className="w-4 h-4" />
+                    Request Refund
+                  </a>
+                  <Link
+                    href="/refund-policy"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 border-2 border-success-400 text-success-500 font-medium rounded-lg hover:bg-success-100 transition-colors text-sm"
+                  >
+                    View Full Policy
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Final CTA - Light with gradient accent */}
+      <section className="py-16 bg-gradient-to-br from-brand-50 via-white to-accent-50">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+          <AnimatedSection>
+            <h2 className="text-3xl sm:text-4xl font-bold text-title mb-4">
+              Ready to Start Scraping?
+            </h2>
+            <p className="text-lg text-body mb-8 max-w-2xl mx-auto">
+              Get 500 credits for just $10 and unlock all features. No subscriptions, no commitments.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/signup"
+                className="group w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-brand-600 to-accent-600 rounded-xl hover:from-brand-500 hover:to-accent-500 transition-all shadow-lg shadow-brand-500/25"
+              >
+                Get Started Free
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="/dashboard/buy-credits"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-title bg-white border-2 border-grayblue-300 rounded-xl hover:border-brand-400 hover:shadow-md transition-all"
+              >
+                Buy Credits Now
+              </Link>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Dark Footer */}
+      <footer className="bg-brand-950 border-t border-white/5 py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-accent-500 rounded-lg flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <span className="text-lg font-bold text-white">Scrapebit</span>
+            </div>
+            <div className="flex items-center gap-6 text-sm text-grayblue-400">
+              <Link href="/terms-of-service" className="hover:text-white transition-colors">Terms</Link>
+              <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy</Link>
+              <Link href="/refund-policy" className="hover:text-white transition-colors">Refunds</Link>
+              <Link href="/support" className="hover:text-white transition-colors">Support</Link>
+            </div>
+          </div>
+          <div className="mt-8 text-center text-sm text-grayblue-500">
+            <p>&copy; {new Date().getFullYear()} Scrapebit. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

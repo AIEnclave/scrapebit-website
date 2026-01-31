@@ -42,9 +42,15 @@ export function useBilling() {
 
       if (response.ok) {
         const data = await response.json()
+        console.log('Billing status response:', data)
+        console.log('Credits object:', data.credits)
+        console.log('Credits remaining:', data.credits?.creditsRemaining)
         setBillingStatus(data)
-        setCreditsRemaining(data.creditsRemaining || 0)
+        setCreditsRemaining(data.credits?.creditsRemaining || 0)
         setCanSchedule(data.subscription ? true : false)
+      } else {
+        const errorText = await response.text()
+        console.error('Billing status error:', response.status, errorText)
       }
     } catch (error) {
       console.error('Failed to fetch billing status:', error)
@@ -53,6 +59,6 @@ export function useBilling() {
     }
   }
 
-  return { billingStatus, creditsRemaining, loading, canSchedule }
+  return { billingStatus, creditsRemaining, loading, canSchedule, refetch: fetchBillingStatus }
 }
 

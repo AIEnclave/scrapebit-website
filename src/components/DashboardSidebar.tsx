@@ -2,9 +2,10 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { Save, Calendar, Settings, Plug, Search, Zap, LogOut, Crown, X, BarChart3 } from 'lucide-react'
+import { Save, Calendar, Settings, Plug, Search, Zap, LogOut, Crown, X, BarChart3, ExternalLink } from 'lucide-react'
 import { useAuthStore } from '@/store/authStore'
 import { useBilling } from '@/hooks/useBilling'
+import Link from 'next/link'
 
 export default function DashboardSidebar() {
   const pathname = usePathname()
@@ -31,6 +32,7 @@ export default function DashboardSidebar() {
     { id: 'scheduled', icon: Calendar, label: 'Scheduled', path: '/dashboard/scheduled' },
     { id: 'integrations', icon: Plug, label: 'Integrations', path: '/dashboard/integrations' },
     { id: 'research', icon: Search, label: 'Deep Research', path: '/dashboard/research' },
+    { id: 'buy-credits', icon: Zap, label: 'Buy Credits', path: '/dashboard/buy-credits' },
     { id: 'settings', icon: Settings, label: 'Settings', path: '/dashboard/settings' },
   ]
 
@@ -183,6 +185,17 @@ export default function DashboardSidebar() {
                   <span className="text-[10px] text-gray-400">
                     Total: {billingStatus?.credits?.creditsAllocated ?? 0}
                   </span>
+                </div>
+                
+                {/* Buy Credits Button - Link to buy-credits page */}
+                <div className="mt-3">
+                  <Link
+                    href="/dashboard/buy-credits"
+                    className="w-full bg-gradient-to-r from-brand-500 to-magenta-500 text-white font-semibold py-1.5 px-3 rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-xs"
+                  >
+                    <Zap className="w-3 h-3" />
+                    <span>Buy Credits</span>
+                  </Link>
                 </div>
               </div>
 

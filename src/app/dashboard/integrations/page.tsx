@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Loader2, Plug, FileSpreadsheet, Database, FileText, Webhook, Zap, CheckCircle, Trash2, X } from 'lucide-react'
+import { Loader2, Plug, FileSpreadsheet, Database, FileText, Webhook, Zap, CheckCircle, Trash2, X, RefreshCw } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
 const PROVIDERS = {
@@ -49,6 +49,40 @@ export default function IntegrationsPage() {
 
   useEffect(() => {
     loadIntegrations()
+  }, [])
+
+  // Refresh integrations when window regains focus (e.g., after OAuth callback window closes)
+  useEffect(() => {
+    const handleFocus = () => {
+      console.log('🔄 Window focused, refreshing integrations...')
+      loadIntegrations()
+    }
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        console.log('🔄 Page visible, refreshing integrations...')
+        loadIntegrations()
+      }
+    }
+
+    // Listen for messages from OAuth callback window
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'notion-connected' || event.data?.type === 'integration-connected') {
+        console.log('📨 Received integration connected message, refreshing...')
+        loadIntegrations()
+      }
+    }
+
+    window.addEventListener('focus', handleFocus)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('message', handleMessage)
+
+    return () => {
+      window.removeEventListener('focus', handleFocus)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('message', handleMessage)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const loadIntegrations = async () => {
@@ -125,14 +159,29 @@ export default function IntegrationsPage() {
   return (
     <div className="h-screen overflow-auto bg-gray-50">
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="px-6 py-4">
-          <h1 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-            <Plug className="w-5 h-5" />
-            Integrations
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Connect external services to export your data
-          </p>
+        <div className="px-6 py-4 flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+              <Plug className="w-5 h-5" />
+              Integrations
+            </h1>
+            <p className="text-sm text-gray-500 mt-1">
+              Connect external services to export your data
+            </p>
+          </div>
+          <button
+            onClick={loadIntegrations}
+            disabled={loading}
+            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
+            title="Refresh integrations"
+          >
+            {loading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <RefreshCw className="w-4 h-4" />
+            )}
+            Refresh
+          </button>
         </div>
       </div>
 
