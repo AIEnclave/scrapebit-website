@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import BuyCredits from '@/components/BuyCredits'
+import PublicHeader from '@/components/PublicHeader'
+import PublicFooter from '@/components/PublicFooter'
 import { Zap, Check, HelpCircle, Mail, Shield, Clock, Download, Globe, Sparkles, RotateCcw, ArrowRight } from 'lucide-react'
 
 const creditPacks = [
@@ -150,42 +152,8 @@ export default function PricingPage() {
         }
       `}</style>
 
-      {/* Dark Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-brand-950/95 backdrop-blur-xl border-b border-white/5">
-        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex w-full items-center justify-between py-4">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-9 h-9 bg-gradient-to-br from-brand-500 to-accent-500 rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/25">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-white to-grayblue-300 bg-clip-text text-transparent">Scrapebit</span>
-            </Link>
-
-            <div className="hidden md:flex items-center gap-8">
-              {['Home', 'Features', 'Pricing', 'API Docs'].map(item => (
-                <Link key={item} href={item === 'Home' ? '/' : item === 'API Docs' ? '/docs' : `/${item.toLowerCase()}`} className={`text-sm transition-colors ${item === 'Pricing' ? 'text-white' : 'text-grayblue-400 hover:text-white'}`}>
-                  {item}
-                </Link>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Link href="/login" className="text-sm text-grayblue-400 hover:text-white transition-colors px-4 py-2">
-                Sign In
-              </Link>
-              <Link
-                href="/signup"
-                className="group relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-brand-600 to-accent-600 rounded-xl overflow-hidden transition-all hover:shadow-lg hover:shadow-brand-500/25"
-              >
-                <span className="relative z-10">Start Free</span>
-                <div className="absolute inset-0 animate-shimmer" />
-              </Link>
-            </div>
-          </div>
-        </nav>
-      </header>
+      {/* Header */}
+      <PublicHeader variant="dark" currentPage="pricing" />
 
       {/* Dark Hero Section */}
       <section className="relative overflow-hidden pt-32 pb-20 bg-brand-950">
@@ -523,30 +491,8 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Dark Footer */}
-      <footer className="bg-brand-950 border-t border-white/5 py-12">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-brand-500 to-accent-500 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <span className="text-lg font-bold text-white">Scrapebit</span>
-            </div>
-            <div className="flex items-center gap-6 text-sm text-grayblue-400">
-              <Link href="/terms-of-service" className="hover:text-white transition-colors">Terms</Link>
-              <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy</Link>
-              <Link href="/refund-policy" className="hover:text-white transition-colors">Refunds</Link>
-              <Link href="/support" className="hover:text-white transition-colors">Support</Link>
-            </div>
-          </div>
-          <div className="mt-8 text-center text-sm text-grayblue-500">
-            <p>&copy; {new Date().getFullYear()} Scrapebit. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      {/* Footer */}
+      <PublicFooter />
     </div>
   )
 }

@@ -4,6 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import ScraperFilters from '@/components/ScraperFilters'
+import PublicHeader from '@/components/PublicHeader'
+import PublicFooter from '@/components/PublicFooter'
 
 interface Template {
   id: number
@@ -82,50 +84,10 @@ export default async function ScrapersPage() {
   return (
     <div className="bg-white min-h-screen">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex w-full items-center justify-between py-4">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg flex items-center justify-center shadow-lg">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">Scrapebit</span>
-            </Link>
-
-            <div className="hidden md:flex items-center gap-8">
-              <Link href="/" className="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">
-                Home
-              </Link>
-              <Link href="/scrapers" className="text-sm font-medium text-brand-600 font-semibold">
-                Scrapers
-              </Link>
-              <Link href="/pricing" className="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">
-                Pricing
-              </Link>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <Link
-                href="/login"
-                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/signup"
-                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-blue-500 rounded-lg hover:from-purple-700 hover:to-blue-600 transition-all shadow-md hover:shadow-lg"
-              >
-                Get Started Free
-              </Link>
-            </div>
-          </div>
-        </nav>
-      </header>
+      <PublicHeader variant="light" currentPage="scrapers" />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-blue-50">
+      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-blue-50 pt-20">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-4">
@@ -232,7 +194,7 @@ export default async function ScrapersPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-purple-600 to-blue-600">
+      <section className="py-20 bg-gradient-to-br from-purple-600 to-cyan-600">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
             Extract Data using AI
@@ -251,6 +213,8 @@ export default async function ScrapersPage() {
         </div>
       </section>
 
+      {/* Footer */}
+      <PublicFooter />
     </div>
   )
 }

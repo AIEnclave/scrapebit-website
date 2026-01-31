@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import PublicHeader from '@/components/PublicHeader'
+import PublicFooter from '@/components/PublicFooter'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - Scrapebit',
@@ -8,8 +10,9 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="bg-white">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+    <div className="bg-white min-h-screen">
+      <PublicHeader variant="light" currentPage="privacy" />
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24 pt-28">
         <div className="mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Privacy Policy</h1>
           <p className="text-gray-500">Effective Date: January 1, 2025</p>
@@ -193,6 +196,7 @@ export default function PrivacyPolicyPage() {
           </div>
         </div>
       </div>
+      <PublicFooter />
     </div>
   )
 }

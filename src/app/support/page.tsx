@@ -1,5 +1,7 @@
 import { Suspense } from 'react'
 import SupportContent from './SupportContent'
+import PublicHeader from '@/components/PublicHeader'
+import PublicFooter from '@/components/PublicFooter'
 
 export const metadata = {
   title: 'Support - Scrapebit',
@@ -8,15 +10,21 @@ export const metadata = {
 
 export default function SupportPage() {
   return (
-    <Suspense fallback={<SupportLoading />}>
-      <SupportContent />
-    </Suspense>
+    <div className="bg-white min-h-screen">
+      <PublicHeader variant="light" currentPage="support" />
+      <div className="pt-16">
+        <Suspense fallback={<SupportLoading />}>
+          <SupportContent />
+        </Suspense>
+      </div>
+      <PublicFooter />
+    </div>
   )
 }
 
 function SupportLoading() {
   return (
-    <div className="min-h-[80vh] flex items-center justify-center">
+    <div className="min-h-[60vh] flex items-center justify-center">
       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
     </div>
   )
