@@ -657,9 +657,13 @@ function StickyHeader() {
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            {['Home', 'Features', 'Pricing', 'API Docs'].map(item => (
-              <Link key={item} href={item === 'Home' ? '/' : item === 'API Docs' ? '/docs' : `/${item.toLowerCase()}`} className="text-sm text-slate-400 hover:text-white transition-colors">
-                {item}
+            {[
+              { name: 'Home', href: '/' },
+              { name: 'Scrapers', href: '/scrapers' },
+              { name: 'Pricing', href: '/pricing' },
+            ].map(item => (
+              <Link key={item.name} href={item.href} className="text-sm text-slate-400 hover:text-white transition-colors">
+                {item.name}
               </Link>
             ))}
           </div>
