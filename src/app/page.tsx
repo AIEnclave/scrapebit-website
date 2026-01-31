@@ -794,7 +794,12 @@ export default function Home() {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
         .animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
+        .animate-marquee { animation: marquee 30s linear infinite; }
         .animate-float-particle { animation: float-particle 8s ease-in-out infinite; }
         .animate-float-code { animation: float-code 6s ease-in-out infinite; }
         .animate-dash { animation: dash 4s ease-in-out infinite; }
@@ -904,18 +909,38 @@ export default function Home() {
       </div>
 
       {/* ============ LIGHT SECTION - TRUSTED BY ============ */}
-      <section className="py-12 bg-white border-b border-gray-100">
+      <section className="py-12 bg-white border-b border-gray-100 overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <p className="text-center text-sm text-gray-500 mb-6 uppercase tracking-wider font-medium">Trusted by teams at</p>
-            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6">
-              {['Google', 'Microsoft', 'Amazon', 'Meta', 'Netflix', 'Stripe'].map((company) => (
-                <span key={company} className="text-gray-400 hover:text-gray-600 font-semibold text-xl transition-colors cursor-default">
+            <p className="text-center text-sm text-gray-500 mb-8 uppercase tracking-wider font-medium">Trusted by teams at</p>
+          </AnimatedSection>
+        </div>
+
+        {/* Infinite scrolling marquee */}
+        <div className="relative">
+          {/* Gradient fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+          {/* Scrolling container */}
+          <div className="flex animate-marquee">
+            {/* First set of logos */}
+            <div className="flex items-center gap-16 px-8 shrink-0">
+              {['Google', 'Microsoft', 'Amazon', 'Meta', 'Netflix', 'Stripe', 'Shopify', 'Salesforce', 'Adobe', 'Slack', 'Notion', 'Figma'].map((company) => (
+                <span key={company} className="text-gray-400 font-semibold text-xl whitespace-nowrap select-none">
                   {company}
                 </span>
               ))}
             </div>
-          </AnimatedSection>
+            {/* Duplicate for seamless loop */}
+            <div className="flex items-center gap-16 px-8 shrink-0">
+              {['Google', 'Microsoft', 'Amazon', 'Meta', 'Netflix', 'Stripe', 'Shopify', 'Salesforce', 'Adobe', 'Slack', 'Notion', 'Figma'].map((company) => (
+                <span key={`${company}-dup`} className="text-gray-400 font-semibold text-xl whitespace-nowrap select-none">
+                  {company}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
