@@ -41,10 +41,9 @@ export default function PublicHeader({ variant = 'dark', currentPage = '', stick
   ]
 
   const resourceItems = [
-    { name: 'Documentation', href: 'https://docs.scrapebit.com', icon: '📚', external: true },
-    { name: 'Blog', href: 'https://blog.scrapebit.com', icon: '✍️', external: true },
-    { name: 'Node.js SDK', href: 'https://www.npmjs.com/package/@scrapebit/sdk', icon: '📦', external: true },
-    { name: 'Chrome Extension', href: 'https://chromewebstore.google.com/detail/scrapebit', icon: '🧩', external: true },
+    { name: 'Documentation', href: 'https://docs.scrapebit.com' },
+    { name: 'Blog', href: 'https://blog.scrapebit.com' },
+    { name: 'Node.js SDK', href: 'https://www.npmjs.com/package/@scrapebit/sdk' },
   ]
 
   const isDark = variant === 'dark'
@@ -173,14 +172,13 @@ export default function PublicHeader({ variant = 'dark', currentPage = '', stick
                             href={item.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
+                            className={`flex items-center gap-2 px-4 py-2.5 text-sm transition-colors ${
                               isDark
                                 ? 'text-slate-300 hover:text-white hover:bg-white/10'
                                 : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
                             }`}
                             onClick={() => setResourcesOpen(false)}
                           >
-                            <span className="text-base">{item.icon}</span>
                             <span className="font-medium">{item.name}</span>
                             <svg className="w-3.5 h-3.5 ml-auto opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
