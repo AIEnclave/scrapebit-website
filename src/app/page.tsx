@@ -650,6 +650,8 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
 // Sticky Header Component - Modern Glassmorphism Design
 function StickyHeader() {
   const [scrolled, setScrolled] = useState(false)
+  const [resourcesOpen, setResourcesOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -659,10 +661,28 @@ function StickyHeader() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setResourcesOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
   const navItems = [
     { name: 'Home', href: '/' },
     { name: 'Scrapers', href: '/scrapers' },
     { name: 'Pricing', href: '/pricing' },
+  ]
+
+  const resourceItems = [
+    { name: 'Documentation', href: 'https://docs.scrapebit.com', icon: '📚' },
+    { name: 'Blog', href: 'https://blog.scrapebit.com', icon: '✍️' },
+    { name: 'Node.js SDK', href: 'https://www.npmjs.com/package/@scrapebit/sdk', icon: '📦' },
+    { name: 'Chrome Extension', href: 'https://chromewebstore.google.com/detail/scrapebit', icon: '🧩' },
   ]
 
   return (
@@ -724,6 +744,48 @@ function StickyHeader() {
                     {item.name}
                   </Link>
                 ))}
+
+                {/* Resources Dropdown */}
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => setResourcesOpen(!resourcesOpen)}
+                    className="relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 flex items-center gap-1 text-slate-400 hover:text-white hover:bg-white/5"
+                  >
+                    Resources
+                    <svg
+                      className={`w-4 h-4 transition-transform duration-200 ${resourcesOpen ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {resourcesOpen && (
+                    <div className="absolute top-full left-0 mt-2 w-56 rounded-xl shadow-xl border overflow-hidden z-50 bg-slate-900/95 border-white/10 backdrop-blur-xl">
+                      <div className="py-2">
+                        {resourceItems.map((item) => (
+                          <a
+                            key={item.name}
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm transition-colors text-slate-300 hover:text-white hover:bg-white/10"
+                            onClick={() => setResourcesOpen(false)}
+                          >
+                            <span className="text-base">{item.icon}</span>
+                            <span className="font-medium">{item.name}</span>
+                            <svg className="w-3.5 h-3.5 ml-auto opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
