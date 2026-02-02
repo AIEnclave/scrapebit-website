@@ -43,17 +43,17 @@ export default function PublicFooter() {
               <li><Link href="/#features" className="text-slate-400 hover:text-white transition-colors">Features</Link></li>
               <li><Link href="/pricing" className="text-slate-400 hover:text-white transition-colors">Pricing</Link></li>
               <li><Link href="/scrapers" className="text-slate-400 hover:text-white transition-colors">Scrapers</Link></li>
-              <li><Link href="/docs" className="text-slate-400 hover:text-white transition-colors">API Docs</Link></li>
+              <li><a href="https://chromewebstore.google.com/detail/scrapebit" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">Chrome Extension</a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold text-white mb-4">Company</h3>
+            <h3 className="font-semibold text-white mb-4">Resources</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/about" className="text-slate-400 hover:text-white transition-colors">About</Link></li>
-              <li><Link href="/blog" className="text-slate-400 hover:text-white transition-colors">Blog</Link></li>
+              <li><a href="https://docs.scrapebit.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">Documentation</a></li>
+              <li><a href="https://blog.scrapebit.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">Blog</a></li>
+              <li><a href="https://www.npmjs.com/package/@scrapebit/sdk" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">Node.js SDK</a></li>
               <li><Link href="/support" className="text-slate-400 hover:text-white transition-colors">Support</Link></li>
-              <li><a href="mailto:ashwinsingh632@gmail.com" className="text-slate-400 hover:text-white transition-colors">Contact</a></li>
             </ul>
           </div>
 
