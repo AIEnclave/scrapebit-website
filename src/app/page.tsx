@@ -460,19 +460,27 @@ function CeilingSpotlightSection() {
           }}
         />
 
-        {/* Light particles/dust in the beam */}
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-white/30 rounded-full animate-float-particle"
-            style={{
-              left: `${40 + Math.random() * 20}%`,
-              top: `${Math.random() * 50}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${4 + Math.random() * 4}s`,
-            }}
-          />
-        ))}
+        {/* Light particles/dust in the beam - using deterministic positions */}
+        {[...Array(20)].map((_, i) => {
+          // Deterministic pseudo-random based on index
+          const seed = (i * 7 + 3) % 20
+          const left = 40 + (seed * 1.1) % 20
+          const top = ((i * 13 + 5) % 50)
+          const delay = ((i * 3 + 1) % 5)
+          const duration = 4 + ((i * 11 + 2) % 4)
+          return (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white/30 rounded-full animate-float-particle"
+              style={{
+                left: `${left}%`,
+                top: `${top}%`,
+                animationDelay: `${delay}s`,
+                animationDuration: `${duration}s`,
+              }}
+            />
+          )
+        })}
       </div>
 
       {/* Floor reflection/glow */}
