@@ -7,31 +7,12 @@ import PublicHeader from '@/components/PublicHeader'
 import PublicFooter from '@/components/PublicFooter'
 import { Zap, Check, HelpCircle, Mail, Shield, Clock, Download, Globe, Sparkles, RotateCcw, ArrowRight, Search, Bell, MessageSquare, Calendar } from 'lucide-react'
 
-const creditPacks = [
-  {
-    credits: 500,
-    price: 10,
-    perCredit: 0.02,
-    popular: true,
-    description: 'Perfect for getting started',
-  },
-  {
-    credits: 1000,
-    price: 18,
-    perCredit: 0.018,
-    savings: '10%',
-    popular: false,
-    description: 'Great for regular scrapers',
-  },
-  {
-    credits: 2500,
-    price: 40,
-    perCredit: 0.016,
-    savings: '20%',
-    popular: false,
-    description: 'Best value for power users',
-  },
-]
+const creditPack = {
+  credits: 500,
+  price: 10,
+  perCredit: 0.02,
+  description: 'Perfect for getting started',
+}
 
 const premiumFeatures = [
   {
@@ -197,72 +178,43 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Light Credit Packs Section */}
+      {/* Light Credit Pack Section */}
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          {/* Credit Packs Grid */}
-          <div className="grid md:grid-cols-3 gap-6 mb-16">
-            {creditPacks.map((pack, index) => (
-              <AnimatedSection key={index} delay={index * 100}>
-                <div
-                  className={`relative rounded-2xl p-6 transition-all duration-300 h-full ${
-                    pack.popular
-                      ? 'bg-gradient-to-br from-brand-600 to-magenta-600 shadow-xl shadow-brand-500/20 scale-105 md:scale-110 animate-pulse-glow text-white'
-                      : 'bg-white border-2 border-grayblue-200 hover:border-brand-300 hover:shadow-lg'
-                  }`}
-                >
-                  {pack.popular && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span className="inline-flex items-center rounded-full bg-amber-400 px-3 py-1 text-xs font-semibold text-amber-900 shadow-lg">
-                        Most Popular
-                      </span>
-                    </div>
-                  )}
+          {/* Single Credit Pack */}
+          <div className="max-w-md mx-auto mb-16">
+            <AnimatedSection>
+              <div className="relative rounded-2xl p-8 bg-gradient-to-br from-brand-600 to-magenta-600 shadow-xl shadow-brand-500/20 text-white">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="inline-flex items-center rounded-full bg-amber-400 px-3 py-1 text-xs font-semibold text-amber-900 shadow-lg">
+                    Starter Pack
+                  </span>
+                </div>
 
-                  {pack.savings && !pack.popular && (
-                    <div className="absolute -top-3 right-4">
-                      <span className="inline-flex items-center rounded-full bg-success-100 border border-success-400 px-2 py-0.5 text-xs font-semibold text-success-500">
-                        Save {pack.savings}
-                      </span>
-                    </div>
-                  )}
-
-                  <div className={`flex items-center gap-2 mb-2 ${pack.popular ? 'text-white/80' : 'text-grayblue-600'}`}>
-                    <Zap className={`w-5 h-5 ${pack.popular ? 'text-amber-300' : 'text-amber-500'}`} />
-                    <span className="text-sm font-medium">{pack.credits.toLocaleString()} Credits</span>
+                <div className="text-center">
+                  <div className="flex items-center justify-center gap-2 mb-4 text-white/80">
+                    <Zap className="w-6 h-6 text-amber-300" />
+                    <span className="text-lg font-medium">{creditPack.credits.toLocaleString()} Credits</span>
                   </div>
 
                   <div className="mb-2">
-                    <span className={`text-4xl font-bold ${pack.popular ? 'text-white' : 'text-title'}`}>
-                      ${pack.price}
-                    </span>
+                    <span className="text-5xl font-bold text-white">${creditPack.price}</span>
                   </div>
 
-                  <p className={`text-sm mb-4 ${pack.popular ? 'text-brand-100' : 'text-grayblue-500'}`}>
-                    ${pack.perCredit.toFixed(3)} per credit
+                  <p className="text-sm mb-2 text-brand-100">
+                    ${creditPack.perCredit.toFixed(2)} per credit
                   </p>
 
-                  <p className={`text-sm ${pack.popular ? 'text-brand-100' : 'text-body'}`}>
-                    {pack.description}
+                  <p className="text-brand-100 mb-6">
+                    {creditPack.description}
                   </p>
 
-                  {pack.popular && (
-                    <div className="mt-6">
-                      <BuyCredits variant="card" onSuccess={() => window.location.reload()} />
-                    </div>
-                  )}
-
-                  {!pack.popular && (
-                    <Link
-                      href="/signup"
-                      className="mt-6 w-full py-2.5 px-4 rounded-lg border-2 border-grayblue-300 text-grayblue-600 font-medium hover:border-brand-400 hover:text-brand-600 transition-all text-center block"
-                    >
-                      Get Started
-                    </Link>
-                  )}
+                  <div className="mt-6">
+                    <BuyCredits variant="card" onSuccess={() => window.location.reload()} />
+                  </div>
                 </div>
-              </AnimatedSection>
-            ))}
+              </div>
+            </AnimatedSection>
           </div>
 
           {/* Value Proposition */}
