@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import BuyCredits from '@/components/BuyCredits'
 import PublicHeader from '@/components/PublicHeader'
 import PublicFooter from '@/components/PublicFooter'
-import { Zap, Check, HelpCircle, Mail, Shield, Clock, Download, Globe, Sparkles, RotateCcw, ArrowRight } from 'lucide-react'
+import { Zap, Check, HelpCircle, Mail, Shield, Clock, Download, Globe, Sparkles, RotateCcw, ArrowRight, Search, Bell, MessageSquare, Calendar } from 'lucide-react'
 
 const creditPacks = [
   {
@@ -39,28 +39,36 @@ const premiumFeatures = [
     title: 'AI-Powered Extraction',
     description: 'Natural language commands to extract exactly what you need. No CSS selectors required.',
     gradient: 'from-brand-500 to-brand-600',
-    bgColor: 'bg-brand-50',
+  },
+  {
+    icon: Calendar,
+    title: 'Scheduled Scraping',
+    description: 'Set up recurring scrapes - hourly, daily, or weekly. Automatically collect fresh data.',
+    gradient: 'from-accent-500 to-accent-600',
+  },
+  {
+    icon: Bell,
+    title: 'Page Monitoring',
+    description: 'Monitor websites for changes and get notified instantly when content updates.',
+    gradient: 'from-warning-500 to-warning-400',
+  },
+  {
+    icon: Search,
+    title: 'Deep Research',
+    description: 'Let AI research topics across multiple sources and compile comprehensive reports.',
+    gradient: 'from-success-500 to-success-400',
+  },
+  {
+    icon: MessageSquare,
+    title: 'Talk with Your Data',
+    description: 'Ask questions about your scraped data in natural language. Get instant insights.',
+    gradient: 'from-magenta-500 to-magenta-600',
   },
   {
     icon: Download,
     title: 'Export Anywhere',
     description: 'One-click export to Google Sheets, Notion, Airtable, or download as CSV/JSON.',
-    gradient: 'from-accent-500 to-accent-600',
-    bgColor: 'bg-accent-50',
-  },
-  {
-    icon: Clock,
-    title: 'Scheduled Scraping',
-    description: 'Set up recurring scrapes to automatically collect data at your preferred intervals.',
-    gradient: 'from-success-500 to-success-400',
-    bgColor: 'bg-success-100',
-  },
-  {
-    icon: Globe,
-    title: 'Subpage Scraping',
-    description: 'Automatically visit and extract data from linked pages to enrich your dataset.',
-    gradient: 'from-warning-500 to-warning-400',
-    bgColor: 'bg-warning-100',
+    gradient: 'from-cyan-500 to-cyan-600',
   },
 ]
 
@@ -245,11 +253,12 @@ export default function PricingPage() {
                   )}
 
                   {!pack.popular && (
-                    <button
-                      className="mt-6 w-full py-2.5 px-4 rounded-lg border-2 border-grayblue-300 text-grayblue-600 font-medium hover:border-brand-400 hover:text-brand-600 transition-all"
+                    <Link
+                      href="/signup"
+                      className="mt-6 w-full py-2.5 px-4 rounded-lg border-2 border-grayblue-300 text-grayblue-600 font-medium hover:border-brand-400 hover:text-brand-600 transition-all text-center block"
                     >
-                      Coming Soon
-                    </button>
+                      Get Started
+                    </Link>
                   )}
                 </div>
               </AnimatedSection>
@@ -304,7 +313,7 @@ export default function PricingPage() {
             </p>
           </AnimatedSection>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {premiumFeatures.map((feature, index) => (
               <AnimatedSection key={index} delay={index * 100}>
                 <div className="group p-6 rounded-2xl bg-white border border-grayblue-200 hover:border-brand-300 hover:shadow-lg transition-all duration-300">
@@ -330,14 +339,14 @@ export default function PricingPage() {
               <h3 className="text-lg font-semibold text-title mb-4 text-center">Also Included</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  'Pre-built templates',
+                  'Pre-built scrapers',
                   'Webhook integration',
-                  'Zapier connection',
-                  'AI summarization',
-                  'Translation support',
-                  'Priority support',
+                  'Google Sheets sync',
+                  'Auto-pagination',
+                  'Subpage scraping',
+                  'PDF generation',
                   'Chrome extension',
-                  'Bulk operations',
+                  'API access',
                 ].map((feature, index) => (
                   <div key={index} className="flex items-center gap-2">
                     <Check className="w-5 h-5 text-success-500 flex-shrink-0" />
