@@ -42,10 +42,14 @@ export function setUser(userId: string, userProperties?: Record<string, any>) {
   if (!isInitialized) {
     initAmplitude()
   }
-  
+
   amplitude.setUserId(userId)
   if (userProperties) {
-    amplitude.identify(new amplitude.Identify().set(userProperties))
+    const identify = new amplitude.Identify()
+    Object.entries(userProperties).forEach(([key, value]) => {
+      identify.set(key, value)
+    })
+    amplitude.identify(identify)
   }
 }
 

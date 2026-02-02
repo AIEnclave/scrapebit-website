@@ -12,7 +12,7 @@ export default function PublicFooter() {
                   <path d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <span className="text-xl font-bold">Scrapebit</span>
+              <span className="text-xl font-bold">DataOtto</span>
             </div>
             <p className="text-sm text-slate-400 mb-4 max-w-xs">
               AI-powered web scraping made simple. Extract data from any website without code.
@@ -68,7 +68,7 @@ export default function PublicFooter() {
         </div>
 
         <div className="border-t border-slate-800 mt-8 pt-8 text-center text-sm text-slate-500">
-          <p>&copy; {new Date().getFullYear()} Scrapebit. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} DataOtto. All rights reserved.</p>
         </div>
       </div>
     </footer>

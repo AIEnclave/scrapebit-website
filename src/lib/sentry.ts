@@ -14,9 +14,7 @@ export function initSentry() {
     environment,
     // Performance Monitoring
     tracesSampleRate: environment === 'production' ? 0.1 : 1.0,
-    // Capture unhandled promise rejections
-    captureUnhandledRejections: true,
-    // Capture uncaught exceptions
+    // Unhandled rejections are captured by default in modern Sentry
     beforeSend(event, hint) {
       // Filter out sensitive data
       if (event.request) {

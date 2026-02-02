@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Scrapebit Frontend
 
-## Getting Started
+Next.js 14 web application for Scrapebit - AI-powered web scraping platform.
 
-First, run the development server:
+## Quick Start
 
+### 1. Install Dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure Environment
+```bash
+cp .env.example .env.local
+# Edit .env.local with your values
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run Development Server
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3001](http://localhost:3001)
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm start` | Run production build |
+| `npm run lint` | Run ESLint |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See `.env.example` for all variables.
 
-## Deploy on Vercel
+### Required
+| Variable | Description | Get From |
+|----------|-------------|----------|
+| `NEXT_PUBLIC_API_URL` | Backend API URL | Your backend URL |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | [Supabase Dashboard](https://supabase.com/dashboard) |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key | [Supabase Dashboard](https://supabase.com/dashboard) |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Customer Support
+| Variable | Description | Get From |
+|----------|-------------|----------|
+| `NEXT_PUBLIC_CRISP_WEBSITE_ID` | Crisp chat widget ID | [Crisp Settings](https://app.crisp.chat/settings/website/) |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Analytics (Optional)
+| Variable | Description | Get From |
+|----------|-------------|----------|
+| `NEXT_PUBLIC_AMPLITUDE_API_KEY` | Amplitude API key | [Amplitude](https://analytics.amplitude.com/) |
+| `NEXT_PUBLIC_SENTRY_DSN` | Sentry error tracking | [Sentry](https://sentry.io/) |
+
+## Project Structure
+
+```
+frontend/
+├── src/
+│   ├── app/                 # Next.js App Router pages
+│   │   ├── dashboard/       # Dashboard pages (protected)
+│   │   ├── login/           # Auth pages
+│   │   ├── pricing/         # Public pages
+│   │   └── page.tsx         # Landing page
+│   ├── components/          # React components
+│   ├── lib/                 # Utilities (Supabase, API, etc.)
+│   └── store/               # Zustand stores
+├── public/                  # Static assets
+└── .env.example             # Environment template
+```
+
+## Features
+
+- **Landing Page** - Marketing pages, pricing
+- **Dashboard** - User dashboard with saved scrapes
+- **Scheduled Jobs** - View and manage scheduled scrapes
+- **Integrations** - Connect Google Sheets, Notion, Webhooks
+- **Deep Research** - AI-powered research tool
+- **Settings** - User preferences and billing
+- **Crisp Chat** - Live customer support widget
+
+## Tech Stack
+
+- **Next.js 14** - React framework with App Router
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Supabase** - Authentication
+- **Zustand** - State management
+- **Crisp** - Customer support chat
+
+## Troubleshooting
+
+**Supabase auth not working**
+- Verify `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- Check Supabase project settings
+
+**API calls failing**
+- Ensure backend is running
+- Check `NEXT_PUBLIC_API_URL` is correct
+
+**Crisp chat not showing**
+- Verify `NEXT_PUBLIC_CRISP_WEBSITE_ID`
+- Check browser console for errors
+
+## License
+
+MIT

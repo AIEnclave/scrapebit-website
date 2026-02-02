@@ -21,7 +21,7 @@ export default function ResearchPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-12 text-center shadow-sm">
           <Search className="w-12 h-12 mx-auto mb-4 text-gray-400" />
           <p className="text-lg font-medium text-gray-900 mb-2">Coming Soon</p>
-          <p className="text-sm text-gray-500">Deep research capabilities powered by AI</p>
+          <p className="text-sm text-gray-500">Deep research capabilities powered by Dataotto</p>
         </div>
       </div>
     </div>

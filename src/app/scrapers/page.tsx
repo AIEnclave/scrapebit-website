@@ -83,11 +83,11 @@ export default async function ScrapersPage() {
 
   return (
     <div className="bg-white min-h-screen">
-      {/* Header */}
-      <PublicHeader variant="light" currentPage="scrapers" />
+      {/* Header - not sticky on this page, scrolls with content */}
+      <PublicHeader variant="light" currentPage="scrapers" sticky={false} />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-blue-50 pt-28">
+      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-blue-50">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-4">
@@ -125,6 +125,10 @@ export default async function ScrapersPage() {
                   <Link
                     key={template.id}
                     href={`/scrapers/${template.name}`}
+                    data-template-card
+                    data-title={template.title}
+                    data-description={template.description}
+                    data-category={template.category}
                     className="group bg-white rounded-xl border border-gray-200 hover:border-brand-300 hover:shadow-lg transition-all duration-200 overflow-hidden"
                   >
                     {/* Template Image */}

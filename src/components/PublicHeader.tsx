@@ -6,18 +6,20 @@ import { useState, useEffect } from 'react'
 interface PublicHeaderProps {
   variant?: 'light' | 'dark'
   currentPage?: string
+  sticky?: boolean
 }
 
-export default function PublicHeader({ variant = 'dark', currentPage = '' }: PublicHeaderProps) {
+export default function PublicHeader({ variant = 'dark', currentPage = '', sticky = true }: PublicHeaderProps) {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
+    if (!sticky) return // Don't track scroll for non-sticky headers
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [sticky])
 
   const navItems = [
     { name: 'Home', href: '/' },
@@ -28,7 +30,7 @@ export default function PublicHeader({ variant = 'dark', currentPage = '' }: Pub
   const isDark = variant === 'dark'
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
+    <header className={`${sticky ? 'fixed top-0 left-0 right-0' : 'relative'} z-50 px-4 pt-4`}>
       <nav className={`mx-auto max-w-6xl transition-all duration-500 ease-out ${
         scrolled
           ? 'py-2'

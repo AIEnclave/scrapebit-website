@@ -218,8 +218,8 @@ export default function EarnCreditsPage() {
         })
 
         if (response.ok) {
-          const { data } = await response.json()
-          setClaimedRewards(data.claimedRewards || {})
+          const result = await response.json()
+          setClaimedRewards(result.claimedRewards || {})
         }
       } catch (error) {
         console.error('Error fetching claim status:', error)

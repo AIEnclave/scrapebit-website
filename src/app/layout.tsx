@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { AnalyticsInit } from "../components/AnalyticsInit";
+import CrispChat from "../components/CrispChat";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-heading",
@@ -26,10 +27,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const crispWebsiteId = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID
+
   return (
     <html lang="en">
       <body className={`${spaceGrotesk.variable} ${plusJakarta.variable} font-sans antialiased`}>
         <AnalyticsInit />
+        {crispWebsiteId && <CrispChat websiteId={crispWebsiteId} />}
         {children}
       </body>
     </html>

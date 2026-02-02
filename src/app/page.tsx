@@ -5,6 +5,20 @@ import { useEffect, useRef, useState } from 'react'
 
 // Animated grid background for hero
 function AnimatedGridBackground() {
+  const [particles, setParticles] = useState<Array<{ left: number; top: number; delay: number; duration: number }>>([])
+
+  useEffect(() => {
+    // Generate random particles only on client side to avoid hydration mismatch
+    setParticles(
+      [...Array(30)].map(() => ({
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        delay: Math.random() * 5,
+        duration: 5 + Math.random() * 10,
+      }))
+    )
+  }, [])
+
   return (
     <div className="absolute inset-0 overflow-hidden">
       {/* Base gradient */}
@@ -18,16 +32,16 @@ function AnimatedGridBackground() {
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-500/30 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '1s' }} />
       <div className="absolute top-1/2 right-1/3 w-[300px] h-[300px] bg-cyan-500/20 rounded-full blur-[80px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
 
-      {/* Floating particles */}
-      {[...Array(30)].map((_, i) => (
+      {/* Floating particles - rendered only on client */}
+      {particles.map((particle, i) => (
         <div
           key={i}
           className="absolute w-1 h-1 bg-white/40 rounded-full animate-float-particle"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 5}s`,
-            animationDuration: `${5 + Math.random() * 10}s`,
+            left: `${particle.left}%`,
+            top: `${particle.top}%`,
+            animationDelay: `${particle.delay}s`,
+            animationDuration: `${particle.duration}s`,
           }}
         />
       ))}
@@ -750,76 +764,6 @@ function StickyHeader() {
 export default function Home() {
   return (
     <div className="bg-white min-h-screen">
-      {/* CSS for custom animations */}
-      <style jsx global>{`
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(1.05); }
-        }
-        @keyframes float-particle {
-          0% { transform: translateY(0) translateX(0); opacity: 0.3; }
-          20% { transform: translateY(-40px) translateX(20px); opacity: 0.8; }
-          40% { transform: translateY(-20px) translateX(-30px); opacity: 0.5; }
-          60% { transform: translateY(-60px) translateX(10px); opacity: 0.9; }
-          80% { transform: translateY(-30px) translateX(-20px); opacity: 0.4; }
-          100% { transform: translateY(0) translateX(0); opacity: 0.3; }
-        }
-        @keyframes float-code {
-          0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
-          50% { transform: translateY(-20px) rotate(3deg); opacity: 0.4; }
-        }
-        @keyframes dash {
-          0% { stroke-dasharray: 0, 1000; stroke-dashoffset: 0; }
-          50% { stroke-dasharray: 500, 1000; stroke-dashoffset: -250; }
-          100% { stroke-dasharray: 0, 1000; stroke-dashoffset: -1000; }
-        }
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes slide-in {
-          from { opacity: 0; transform: translateX(-20px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes bounce-in {
-          0% { opacity: 0; transform: scale(0.8); }
-          50% { transform: scale(1.05); }
-          100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes shimmer {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-        @keyframes gradient-shift {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
-        .animate-marquee { animation: marquee 30s linear infinite; }
-        .animate-float-particle { animation: float-particle 8s ease-in-out infinite; }
-        .animate-float-code { animation: float-code 6s ease-in-out infinite; }
-        .animate-dash { animation: dash 4s ease-in-out infinite; }
-        .animate-spin-slow { animation: spin-slow 3s linear infinite; }
-        .animate-slide-in { animation: slide-in 0.5s ease-out forwards; }
-        .animate-bounce-in { animation: bounce-in 0.5s ease-out forwards; }
-        .animate-shimmer {
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-          background-size: 200% 100%;
-          animation: shimmer 2s infinite;
-        }
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient-shift 3s ease infinite;
-        }
-        .bg-gradient-radial {
-          background: radial-gradient(var(--tw-gradient-stops));
-        }
-      `}</style>
-
       {/* Sticky Header */}
       <StickyHeader />
 
@@ -836,7 +780,7 @@ export default function Home() {
                 {/* AI Badge */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6">
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
-                  <span className="text-sm text-purple-300">Powered by Advanced AI</span>
+                  <span className="text-sm text-purple-300">Enterprise-Grade AI</span>
                   <span className="px-2 py-0.5 bg-purple-500/20 rounded text-xs text-purple-200">GPT-4 & Claude</span>
                 </div>
 
@@ -875,15 +819,28 @@ export default function Home() {
                     </span>
                     <div className="absolute inset-0 animate-shimmer" />
                   </Link>
-                  <Link
-                    href="/pricing"
-                    className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-medium text-slate-300 bg-slate-800/50 border border-slate-700 rounded-xl hover:bg-slate-800 hover:border-slate-600 transition-all"
+                  <a
+                    href="https://chromewebstore.google.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-medium text-slate-300 bg-slate-800/50 border border-slate-700 rounded-xl hover:bg-slate-800 hover:border-slate-600 transition-all"
                   >
-                    View Pricing
-                  </Link>
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-3.952 6.848a12.014 12.014 0 0 0 9.63-9.606z"/>
+                    </svg>
+                    Chrome Extension
+                  </a>
                 </div>
 
-                <div className="mt-8 flex items-center gap-6 text-sm text-slate-500">
+                {/* Custom scraping mention */}
+                <div className="mt-6 p-4 rounded-xl bg-slate-800/30 border border-slate-700/50">
+                  <p className="text-sm text-slate-400">
+                    <span className="text-purple-400 font-medium">Need custom scraping?</span> We build tailored solutions for complex requirements, anti-bot challenges & enterprise scale.{' '}
+                    <a href="mailto:ashwinsingh632@gmail.com?subject=Custom Scraping Requirement" className="text-cyan-400 hover:underline">Contact us →</a>
+                  </p>
+                </div>
+
+                <div className="mt-6 flex items-center gap-6 text-sm text-slate-500">
                   <div className="flex items-center gap-2">
                     <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -1023,7 +980,7 @@ export default function Home() {
               AI-First Approach
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-              Powered by State-of-the-Art AI
+              Next-Gen AI Technology
             </h2>
             <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
               Our AI understands web pages like a human does. It identifies patterns, extracts structured data, and handles edge cases automatically.
@@ -1239,6 +1196,139 @@ export default function Home() {
                 </div>
               </AnimatedSection>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ CHROME EXTENSION SECTION ============ */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Content */}
+            <AnimatedSection>
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-cyan-100 text-sm font-medium text-purple-700 mb-4">
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-3.952 6.848a12.014 12.014 0 0 0 9.63-9.606z"/>
+                </svg>
+                Chrome Extension
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                Point. Click. <span className="bg-gradient-to-r from-purple-600 to-cyan-600 bg-clip-text text-transparent">Extract.</span>
+              </h2>
+              <p className="text-lg text-gray-600 mb-8">
+                Our Chrome extension brings the power of AI scraping directly to your browser. No coding, no setup - just install and start extracting data from any website.
+              </p>
+
+              <div className="space-y-4 mb-8">
+                {[
+                  { icon: '🎯', title: 'Visual Selection', desc: 'Click on any element to select what data you want' },
+                  { icon: '🤖', title: 'AI Auto-Detection', desc: 'AI automatically finds similar items on the page' },
+                  { icon: '📊', title: 'Instant Export', desc: 'Download to CSV, JSON, or sync to Google Sheets' },
+                  { icon: '🔄', title: 'Pagination Support', desc: 'Automatically scrape across multiple pages' },
+                ].map((feature, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <span className="text-2xl">{feature.icon}</span>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{feature.title}</h4>
+                      <p className="text-sm text-gray-600">{feature.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href="https://chromewebstore.google.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-6 py-3 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 transition-all group"
+              >
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-3.952 6.848a12.014 12.014 0 0 0 9.63-9.606z"/>
+                </svg>
+                Add to Chrome - It&apos;s Free
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </AnimatedSection>
+
+            {/* Right - Browser Mockup */}
+            <AnimatedSection delay={200}>
+              <div className="relative">
+                {/* Glow effect */}
+                <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/20 via-cyan-500/20 to-purple-500/20 rounded-3xl blur-2xl" />
+
+                {/* Browser window */}
+                <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+                  {/* Browser chrome */}
+                  <div className="bg-gray-100 px-4 py-3 flex items-center gap-3 border-b border-gray-200">
+                    <div className="flex gap-1.5">
+                      <div className="w-3 h-3 rounded-full bg-red-400" />
+                      <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                      <div className="w-3 h-3 rounded-full bg-green-400" />
+                    </div>
+                    <div className="flex-1 bg-white rounded-lg px-3 py-1.5 text-xs text-gray-500 flex items-center gap-2 border border-gray-200">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                      example-directory.com/companies
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg">
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                      <span className="text-xs text-white font-medium">Scrapebit</span>
+                    </div>
+                  </div>
+
+                  {/* Page content mockup */}
+                  <div className="p-6 bg-gray-50 min-h-[300px]">
+                    {/* Extension popup overlay */}
+                    <div className="absolute top-16 right-4 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-10">
+                      <div className="bg-gradient-to-r from-purple-600 to-cyan-600 px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center">
+                            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                          </div>
+                          <span className="text-white font-semibold text-sm">Scrapebit</span>
+                        </div>
+                      </div>
+                      <div className="p-3 space-y-2">
+                        <div className="text-xs text-gray-500 font-medium">Detected Data:</div>
+                        <div className="space-y-1.5">
+                          {['Company Name', 'Email', 'Phone', 'Website'].map((field, i) => (
+                            <div key={i} className="flex items-center gap-2 p-2 bg-green-50 rounded-lg border border-green-200">
+                              <svg className="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span className="text-xs text-gray-700">{field}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <button className="w-full mt-2 px-3 py-2 bg-gradient-to-r from-purple-600 to-cyan-600 text-white text-xs font-semibold rounded-lg">
+                          Extract 147 Items
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Fake page content */}
+                    <div className="space-y-3">
+                      {[1, 2, 3].map((i) => (
+                        <div key={i} className={`p-4 bg-white rounded-lg border-2 transition-all ${i === 1 ? 'border-purple-500 ring-2 ring-purple-500/20' : 'border-gray-200'}`}>
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-gray-200 rounded-lg" />
+                            <div className="flex-1">
+                              <div className="h-3 bg-gray-300 rounded w-32 mb-2" />
+                              <div className="h-2 bg-gray-200 rounded w-48" />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
@@ -1477,10 +1567,96 @@ export default function Home() {
           </div>
 
           <div className="border-t border-slate-800 mt-8 pt-8 text-center text-sm text-slate-500">
-            <p>&copy; {new Date().getFullYear()} Scrapebit. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} DataOtto. All rights reserved.</p>
           </div>
         </div>
       </footer>
+
+      {/* Fixed Bottom Bar */}
+      <FixedBottomBar />
+    </div>
+  )
+}
+
+// Fixed Bottom Bar Component
+function FixedBottomBar() {
+  const [isVisible, setIsVisible] = useState(true)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show bar after scrolling 300px
+      setIsScrolled(window.scrollY > 300)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  if (!isVisible) return null
+
+  return (
+    <div className={`fixed bottom-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'translate-y-0' : 'translate-y-full'}`}>
+      {/* Gradient border top */}
+      <div className="h-px bg-gradient-to-r from-purple-500 via-cyan-500 to-purple-500" />
+
+      <div className="bg-slate-900/95 backdrop-blur-lg border-t border-slate-800">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-3 gap-4">
+            {/* Left - Message */}
+            <div className="hidden sm:flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center shrink-0">
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-white">Start scraping in seconds</p>
+                <p className="text-xs text-slate-400">Free Chrome extension • No credit card required</p>
+              </div>
+            </div>
+
+            {/* Center - Buttons */}
+            <div className="flex items-center gap-3 flex-1 sm:flex-none justify-center sm:justify-end">
+              {/* Chrome Extension Button */}
+              <a
+                href="https://chromewebstore.google.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white text-slate-900 text-sm font-semibold rounded-lg hover:bg-gray-100 transition-all"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-3.952 6.848a12.014 12.014 0 0 0 9.63-9.606z"/>
+                </svg>
+                <span className="hidden xs:inline">Add to Chrome</span>
+                <span className="xs:hidden">Install</span>
+              </a>
+
+              {/* Custom Scraping Button */}
+              <a
+                href="mailto:ashwinsingh632@gmail.com?subject=Custom Scraping Requirement&body=Hi,%0A%0AI need a custom scraping solution.%0A%0AWebsite(s): %0AData needed: %0AVolume: %0A%0AThanks!"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-cyan-600 text-white text-sm font-semibold rounded-lg hover:from-purple-500 hover:to-cyan-500 transition-all"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+                <span className="hidden sm:inline">Custom Scraping</span>
+                <span className="sm:hidden">Custom</span>
+              </a>
+
+              {/* Close button */}
+              <button
+                onClick={() => setIsVisible(false)}
+                className="p-2 text-slate-400 hover:text-white transition-colors"
+                aria-label="Close"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
